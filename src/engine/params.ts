@@ -140,6 +140,24 @@ export const ParamsSchema = z.object({
     maternityStartWeeksBeforeDue: positiveInt,
   }),
 
+  /** Thresholds for risk warnings (KAN-19). Heuristics, not legal limits. */
+  warnings: z.object({
+    /** Pregnancy start is estimated as due/birth date minus this many weeks. */
+    pregnancyWeeks: positiveInt,
+    /** Insurance started this many months before pregnancy (or later) → "sham contract" risk. */
+    recentInsuranceMonths: positiveInt,
+    /** Base above this multiple of the minimum wage counts as high. */
+    highBaseMinWageMultiple: z.number().positive(),
+    /** Declared base increase in pregnancy vs pre-pregnancy average that triggers a warning. */
+    baseIncreaseThreshold: z.number().positive(),
+    /** Employee pay change in pregnancy vs pre-pregnancy average that triggers a warning. */
+    incomeChangeThreshold: z.number().positive(),
+    /** Days before the 21-day deadline when the info turns into a warning. */
+    deadlineWarnDays: positiveInt,
+    /** Fixed-term / trial (> 1 month) contract ending after this month of pregnancy is extended until birth (art. 177 § 3 KP). */
+    kpFixedTermPregnancyMonth: positiveInt,
+  }),
+
   adoptionAgeLimits: z.object({
     pieczaYears: positiveInt,
     pieczaPostponedSchoolYears: positiveInt,

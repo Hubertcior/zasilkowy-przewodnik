@@ -87,6 +87,15 @@
     "longApplicationDaysAfterBirth": 21,
     "maternityStartWeeksBeforeDue": 6
   },
+  "warnings": {
+    "pregnancyWeeks": 40,
+    "recentInsuranceMonths": 3,
+    "highBaseMinWageMultiple": 2,
+    "baseIncreaseThreshold": 0.3,
+    "incomeChangeThreshold": 0.2,
+    "deadlineWarnDays": 7,
+    "kpFixedTermPregnancyMonth": 3
+  },
   "adoptionAgeLimits": {
     "pieczaYears": 7,
     "pieczaPostponedSchoolYears": 10,
