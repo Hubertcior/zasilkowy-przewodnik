@@ -115,6 +115,8 @@ export const ParamsSchema = z.object({
     maxBenefitDays: positiveInt,
     /** Waiting period before sickness benefit (art. 4 ustawy zasiłkowej). */
     waitingDays: z.object({ obowiazkowe: nonNegativeInt, dobrowolne: nonNegativeInt }),
+    /** Earlier insurance periods count towards the waiting period if the break was at most this many days (art. 4 ust. 2 u.z.). */
+    waitingMaxGapDays: nonNegativeInt,
   }),
 
   /** Payer reporting more than this many insured (as of 30 Nov of previous year) pays benefits itself. Art. 61 ustawy zasiłkowej. */

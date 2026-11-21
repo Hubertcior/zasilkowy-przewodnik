@@ -70,7 +70,8 @@
   "pregnancy": {
     "employerPaidDays": { "under50": 33, "from50": 14 },
     "maxBenefitDays": 270,
-    "waitingDays": { "obowiazkowe": 30, "dobrowolne": 90 }
+    "waitingDays": { "obowiazkowe": 30, "dobrowolne": 90 },
+    "waitingMaxGapDays": 30
   },
   "payerThresholdInsured": 20,
   "deadlines": {

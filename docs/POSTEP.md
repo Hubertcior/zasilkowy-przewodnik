@@ -1,0 +1,20 @@
+# Postęp prac i przekazanie projektu
+
+Dziennik dla osoby (lub agenta), która przejmuje projekt. Aktualizowany po każdym zadaniu z Jiry
+(site hacknation-thebuggers.atlassian.net, projekt KAN). Szczegóły i założenia każdego zadania są w komentarzu w Jirze.
+
+## Jak kontynuować
+
+1. Przeczytaj `CLAUDE.md` i `docs/wymagania.md`.
+2. Sprawdź listę zadań: `project = KAN AND statusCategory != Done ORDER BY Rank ASC`.
+3. Weź pierwsze niezrobione zadanie, zrób je zgodnie z workflow z `CLAUDE.md`, dopisz wiersz poniżej.
+
+## Zrobione
+
+| Zadanie | Commit | Co | Uwagi do weryfikacji |
+|---------|--------|----|----------------------|
+| KAN-11 | 33061e9 | Setup Next.js 16 + TS + Tailwind 4 + shadcn/ui (radix-nova) + vitest | Projekt w podfolderze `zasilkowy-przewodnik/` (polskie znaki w nazwie folderu nadrzędnego). `form` z shadcn zastąpiony `field`. Deploy na Vercel nie zrobiony (instrukcja w README). |
+| KAN-12 | 9f03653 | CLAUDE.md, docs/wymagania.md, `src/engine/types.ts` | — |
+| KAN-13 | d21e521 | `params.default.json`, `ParamsSchema`, ParamsStore (file/memory/upstash), `/api/params` | `cacheComponents` włączone → GET-y używają `connection()`, nie `dynamic`. |
+| KAN-14 | 8ea9fa7 | `calcBase()` – podstawa wymiaru (pracownik / nie-pracownik), `steps` po polsku | Numery artykułów w `BASE_SOURCES` podane z pamięci – zweryfikować z ustawą. |
+| KAN-15 | (ten commit) | `checkEligibility()` – prawo do zasiłku, okres wyczekiwania, kto wypłaca, formularze i załączniki | Numery artykułów w `ELIGIBILITY_SOURCES` do weryfikacji. Nowy parametr `pregnancy.waitingMaxGapDays`. |
