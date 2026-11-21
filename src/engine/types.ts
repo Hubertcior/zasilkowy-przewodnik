@@ -95,6 +95,10 @@ export interface LeavePlan {
   fatherTakesOverFromWeek?: number;
   parental: ParentalPart[];
   paternityWeeks?: 0 | 1 | 2;
+  /** Week (from birth) in which the father's paternity leave starts; default 0 (right after birth). */
+  paternityStartWeek?: number;
+  /** Reason allowing the father to take over maternity leave before the mother's 14 weeks. */
+  specialTakeOver?: 'szpital' | 'niezdolnosc_do_samodzielnej_egzystencji' | 'smierc_matki' | 'porzucenie_dziecka';
 }
 
 export interface Warning {
@@ -128,6 +132,9 @@ export interface BenefitPeriod {
   monthlyAmount: number;
   total: number;
   payer: 'platnik' | 'ZUS' | 'pracodawca';
+  /** Part-time work combined with parental leave (0..0.5). */
+  workFraction?: number;
+  note?: string;
 }
 
 export interface CaseFile {

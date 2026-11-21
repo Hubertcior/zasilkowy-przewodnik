@@ -4,4 +4,5 @@ export * from "./money";
 export * from "./base";
 export * from "./eligibility";
 export * from "./entitlement";
+export * from "./schedule";
 export * from "./params";
