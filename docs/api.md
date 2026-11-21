@@ -32,7 +32,7 @@ Wszystkie obliczenia pobierają aktualne parametry z `getParamsStore()` (panel a
 | GET | `/api/mock/zus/zadluzenie?date=` | SYMULACJA zadłużenia składkowego na dzień: `{ date, asOf, amount, details[] }` (KAN-29) |
 | GET | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: lista wątków `{ threads[] }` (KAN-29) |
 | POST | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: `{ category: macierzynski\|chorobowy\|dokumenty, subject?, question }` → 201 `{ thread }`; odpowiedź szablonowa po ok. 3 s (KAN-29) |
-| POST | `/api/mock/wnioski` | SYMULACJA wysyłki wniosków (KAN-30) |
+| POST | `/api/mock/wnioski` | SYMULACJA wysyłki wniosku: `{ formId, values }` → 201 `{ caseNumber, recipient, submittedAt, timeline[] }` (statusy złożony → przyjęty → w trakcie rozpatrywania z czasami), 400 `{ error: "validation", fields }`, 404 nieznany formularz. Bezstanowe, wartości (w tym nr konta) nie są zapisywane. Definicje formularzy: `src/forms` (KAN-30) |
 
 Schematy wejścia: `src/engine/schemas.ts` (zod, zgodne z `src/engine/types.ts`).
 

@@ -3,7 +3,6 @@ import { POST as calculate } from "@/app/api/calculate/route";
 import { GET as getCase } from "@/app/api/cases/[id]/route";
 import { GET as listCases } from "@/app/api/cases/route";
 import { POST as eligibility } from "@/app/api/eligibility/route";
-import { POST as submitApplications } from "@/app/api/mock/wnioski/route";
 import { POST as pregnancy } from "@/app/api/pregnancy/route";
 import { MemoryParamsStore, setParamsStore } from "@/server/paramsStore";
 
@@ -98,9 +97,4 @@ describe("engine API", () => {
     expect(res.status).toBe(404);
   });
 
-  it("mock endpoints return 501 with description", async () => {
-    const res = await submitApplications();
-    expect(res.status).toBe(501);
-    expect((await res.json()).message).toContain("KAN-30");
-  });
 });

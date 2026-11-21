@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/coming-soon";
+import { PageContainer } from "@/components/page-container";
+import { ApplicationsView } from "./applications-view";
 
 export const metadata: Metadata = { title: "Wnioski – Zasiłkowy Przewodnik" };
 
 export default function Page() {
-  return <ComingSoon title="Wnioski" task="KAN-30">Kreator wniosków o urlopy i zasiłek (ZAM) wypełniany danymi z kalkulatora.</ComingSoon>;
+  return (
+    <PageContainer>
+      <ApplicationsView />
+    </PageContainer>
+  );
 }

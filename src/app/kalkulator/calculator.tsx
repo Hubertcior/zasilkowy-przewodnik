@@ -2,6 +2,7 @@
 
 import { Plus, Printer, Save, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { ExplainSteps } from "@/components/explain-steps";
 import { Money } from "@/components/money";
@@ -57,6 +58,7 @@ function Field({ label, htmlFor, children, hint }: { label: string; htmlFor?: st
 
 export function Calculator() {
   const store = useCaseStore();
+  const router = useRouter();
   const todayStr = useToday();
   const hasStoreData = store.parents.length > 0 && !!store.scenario;
 
@@ -520,7 +522,9 @@ export function Calculator() {
               <Button
                 onClick={() => {
                   store.updatePlan(plan);
-                  toast.success("Plan zapisany – użyjemy go we wnioskach");
+                  toast.success("Plan zapisany – użyjemy go we wnioskach", {
+                    action: { label: "Przejdź do wniosków", onClick: () => router.push("/wnioski") },
+                  });
                 }}
                 disabled={!hasStoreData}
               >
