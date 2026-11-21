@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Info } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { Controller, useForm, useWatch, type Control, type FieldPath, type UseFormRegister, type FieldErrors } from "react-hook-form";
 import { toast } from "sonner";
 import { Money } from "@/components/money";
@@ -18,15 +18,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { ParentDataSchema, ScenarioSchema } from "@/engine/schemas";
 import { cn } from "@/lib/utils";
 import { emptyWizard, monthsBefore, referenceDate, STEP_FIELDS, WizardSchema, wizardToCase, type WizardForm } from "@/lib/wizard";
+import { useToday } from "@/hooks/use-today";
 import { useCaseStore } from "@/store/useCaseStore";
 
 const STEPS = ["Sytuacja", "Mama", "Zarobki mamy", "Tata", "Podsumowanie"];
 const today = () => new Date().toISOString().slice(0, 10);
-const noopSubscribe = () => () => {};
-/** Today's date on the client; null while prerendering (cacheComponents forbids reading the clock then). */
-function useToday(): string | null {
-  return useSyncExternalStore(noopSubscribe, today, () => null);
-}
+
 const num = { setValueAs: (v: string) => (v === "" || v == null ? undefined : Number(String(v).replace(",", "."))) };
 
 // ---------- small field helpers ----------

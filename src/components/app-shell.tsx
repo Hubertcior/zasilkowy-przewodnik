@@ -93,7 +93,7 @@ function Footer() {
       .catch(() => {});
   }, []);
   return (
-    <footer className="text-muted-foreground border-t px-4 py-6 text-xs">
+    <footer className="print:hidden text-muted-foreground border-t px-4 py-6 text-xs">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p>
           Aplikacja informacyjna, nie zastępuje decyzji ZUS.
@@ -126,7 +126,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         Przejdź do treści
       </a>
 
-      <header className="bg-background/90 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-40 border-b backdrop-blur">
+      <header className="print:hidden bg-background/90 supports-[backdrop-filter]:bg-background/70 sticky top-0 z-40 border-b backdrop-blur">
         <div className="flex h-14 items-center justify-between gap-4 px-4 lg:h-16 lg:px-6">
           <Logo />
           <Sheet open={open} onOpenChange={setOpen}>
@@ -155,12 +155,12 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
 
       <div className="flex flex-1">
-        <aside className="bg-sidebar sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 overflow-y-auto border-r p-3 lg:block">
+        <aside className="print:hidden bg-sidebar sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 overflow-y-auto border-r p-3 lg:block">
           <nav aria-label="Menu główne">
             <NavLinks pathname={pathname} />
           </nav>
         </aside>
-        <div className="flex min-w-0 flex-1 flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0">
+        <div className="flex min-w-0 flex-1 flex-col pb-[calc(4rem+env(safe-area-inset-bottom))] lg:pb-0 print:pb-0">
           <div id="main" className="flex flex-1 flex-col">
             {children}
           </div>
@@ -170,7 +170,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <nav
         aria-label="Nawigacja dolna"
-        className="bg-background/95 fixed inset-x-0 bottom-0 z-40 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+        className="print:hidden bg-background/95 fixed inset-x-0 bottom-0 z-40 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
       >
         <ul className="grid grid-cols-5">
           {NAV.filter((n) => MOBILE_MAIN.includes(n.href)).map((item) => {
