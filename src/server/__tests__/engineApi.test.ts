@@ -3,7 +3,7 @@ import { POST as calculate } from "@/app/api/calculate/route";
 import { GET as getCase } from "@/app/api/cases/[id]/route";
 import { GET as listCases } from "@/app/api/cases/route";
 import { POST as eligibility } from "@/app/api/eligibility/route";
-import { POST as mobywatel } from "@/app/api/mock/mobywatel/login/route";
+import { POST as pueMessage } from "@/app/api/mock/pue/wiadomosc/route";
 import { POST as pregnancy } from "@/app/api/pregnancy/route";
 import { MemoryParamsStore, setParamsStore } from "@/server/paramsStore";
 
@@ -99,8 +99,8 @@ describe("engine API", () => {
   });
 
   it("mock endpoints return 501 with description", async () => {
-    const res = await mobywatel();
+    const res = await pueMessage();
     expect(res.status).toBe(501);
-    expect((await res.json()).message).toContain("KAN-21");
+    expect((await res.json()).message).toContain("KAN-29");
   });
 });
