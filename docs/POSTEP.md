@@ -17,4 +17,5 @@ Dziennik dla osoby (lub agenta), która przejmuje projekt. Aktualizowany po każ
 | KAN-12 | 9f03653 | CLAUDE.md, docs/wymagania.md, `src/engine/types.ts` | — |
 | KAN-13 | d21e521 | `params.default.json`, `ParamsSchema`, ParamsStore (file/memory/upstash), `/api/params` | `cacheComponents` włączone → GET-y używają `connection()`, nie `dynamic`. |
 | KAN-14 | 8ea9fa7 | `calcBase()` – podstawa wymiaru (pracownik / nie-pracownik), `steps` po polsku | Numery artykułów w `BASE_SOURCES` podane z pamięci – zweryfikować z ustawą. |
-| KAN-15 | (ten commit) | `checkEligibility()` – prawo do zasiłku, okres wyczekiwania, kto wypłaca, formularze i załączniki | Numery artykułów w `ELIGIBILITY_SOURCES` do weryfikacji. Nowy parametr `pregnancy.waitingMaxGapDays`. |
+| KAN-15 | 9b69743 | `checkEligibility()` – prawo do zasiłku, okres wyczekiwania, kto wypłaca, formularze i załączniki | Numery artykułów w `ELIGIBILITY_SOURCES` do weryfikacji. Nowy parametr `pregnancy.waitingMaxGapDays`. |
+| KAN-16 | (ten commit) | `calcEntitlement()` – wymiar urlopów: macierzyński, rodzicielski, uzupełniający, ojcowski, adopcja/piecza, zgon dziecka | Skracanie urlopu przy dziecku blisko limitu wieku tylko opisane w notatce (brak daty urodzenia dziecka w typach). Termin rodzicielskiego przy adopcji szacunkowy. Artykuły KP w `ENTITLEMENT_SOURCES` do weryfikacji. |
