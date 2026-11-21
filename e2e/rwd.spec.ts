@@ -1,7 +1,7 @@
 import { test } from "@playwright/test";
 import { expectNoHorizontalScroll, loginPersona } from "./helpers";
 
-const PUBLIC = ["/", "/kreator", "/kalkulator", "/sprawy", "/trudne-sytuacje", "/przydatne-linki", "/logowanie", "/admin/login"];
+const PUBLIC = ["/", "/kreator", "/kalkulator", "/sprawy", "/trudne-sytuacje", "/przydatne-linki", "/o-projekcie", "/logowanie", "/admin/login"];
 const WITH_DATA = ["/moja-sytuacja", "/kalkulator", "/co-i-gdzie", "/wnioski", "/konto"];
 
 test("brak poziomego scrolla – strony publiczne", async ({ page }) => {

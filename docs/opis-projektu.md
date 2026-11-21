@@ -7,8 +7,8 @@ HackNation 2026 · zadanie Zakładu Ubezpieczeń Społecznych · repozytorium: h
 | | |
 |---|---|
 | Demo online | _uzupełnić po wdrożeniu na Vercel_ (instrukcja w [README](../README.md#deploy-vercel)) |
-| Film (≤ 3 min) | _KAN-35_ |
-| Prezentacja (≤ 10 slajdów) | _KAN-34_ |
+| Film (≤ 3 min) | _w przygotowaniu_ – po publikacji w aplikacji na `/o-projekcie`; skrypt: [film-skrypt.md](film-skrypt.md) |
+| Prezentacja (≤ 10 slajdów) | [prezentacja.html](prezentacja.html), notatki i Q&A: [pitch-notatki.md](pitch-notatki.md) |
 | Hasło panelu admina na demo | `demo-zus` (gdy nie ustawiono `ADMIN_PASSWORD`) |
 
 ![Moja sytuacja – desktop](screens/03-moja-sytuacja-desktop.jpg)
@@ -76,8 +76,8 @@ Legenda: ✓ zrobione · ◐ częściowo (opis w uwagach).
 |-----------|-------|--------|
 | Zmiana parametrów (stawki, wymiary) | `/admin` – 7 zakładek, walidacja, opis zmiany, wersjonowanie, historia z różnicami, reset, eksport/import JSON | ✓ |
 | Szczegółowy opis i tytuł | ten dokument | ✓ |
-| Prezentacja ≤ 10 slajdów | KAN-34 | ◐ w przygotowaniu |
-| Film ≤ 3 min w otwartym repozytorium | KAN-35 | ◐ w przygotowaniu |
+| Prezentacja ≤ 10 slajdów | [prezentacja.html](prezentacja.html) | ✓ |
+| Film ≤ 3 min w otwartym repozytorium | skrypt gotowy ([film-skrypt.md](film-skrypt.md)), strona `/o-projekcie` | ◐ czeka na nagranie |
 | Repozytorium kodu | GitHub (link wyżej) | ✓ |
 | Zrzuty ekranu | rozdział 8, `docs/screens/` | ✓ |
 | Demo online z testowaniem spraw | `/sprawy`, `/demo/<persona>` | ◐ czeka na wdrożenie na Vercel |
@@ -157,7 +157,7 @@ Dodaj `?do=kalkulator`, `?do=co-i-gdzie`, `?do=wnioski` albo `?do=konto`, żeby 
 
 **Panel admina:** `/admin`, hasło `demo-zus`. Zmień np. stawkę „Wniosek o cały urlop” na 0,9 i zapisz – kalkulator od razu liczy według nowej wartości. „Domyślne” przywraca parametry.
 
-**Testy automatyczne:** `npm test` (173 testy jednostkowe), `npm run cases` (10 spraw), `npm run e2e` (26 testów E2E na desktopie i iPhonie 13).
+**Testy automatyczne:** `npm test` (173 testy jednostkowe), `npm run cases` (10 spraw), `npm run e2e` (27 testów E2E na desktopie i iPhonie 13, w tym przejście ścieżki z filmu).
 
 ## 6. Sztuczna inteligencja
 

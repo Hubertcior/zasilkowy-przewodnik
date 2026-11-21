@@ -170,12 +170,19 @@ function Footer() {
             Źródła: zus.pl
           </a>
         </p>
-        <Link
-          href="/admin"
-          className="hover:text-foreground inline-flex items-center gap-1 underline-offset-2 hover:underline"
-        >
-          <Settings className="size-3" aria-hidden /> Panel administracyjny
-        </Link>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <Link href="/o-projekcie" className="hover:text-foreground underline-offset-2 hover:underline">
+            O projekcie (film)
+          </Link>
+          {/* No prefetch: a prefetched redirect to the login page would be reused right after logging in. */}
+          <Link
+            href="/admin"
+            prefetch={false}
+            className="hover:text-foreground inline-flex items-center gap-1 underline-offset-2 hover:underline"
+          >
+            <Settings className="size-3" aria-hidden /> Panel administracyjny
+          </Link>
+        </div>
       </div>
     </footer>
   );

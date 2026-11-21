@@ -37,6 +37,7 @@ Dziennik dla osoby (lub agenta), która przejmuje projekt. Aktualizowany po każ
 | KAN-32 | 9f9b53b | Playwright (`playwright.config.ts`, `e2e/*.spec.ts`, `npm run e2e`): mObywatel (Anna → sytuacja → kalkulator 4922,84 → co i gdzie), PUE, sprawy (wybór, upload, zły plik), kreator JDG bez chorobowego, kalkulator (bliźnięta + „Za życiem” = 67 tyg., łączenie z pracą ×2, martwe urodzenie), admin (zmiana stawki → kalkulator → reset, `afterEach` resetuje przez API), wnioski (wysyłka), brak poziomego scrolla na 13 stronach; projekty desktop 1440×900 i iPhone 13 (chromium); `docs/checklista-reczna.md` | **Poprawione błędy:** kalkulator renderował panel opcji dwa razy (zdublowane `id`, etykiety wskazywały ukryte pola) – teraz raz, zwijany na mobile; logowanie do admina nie działało, gdy footer zdążył prefetchować `/admin` (przekierowanie z bufora routera) – teraz pełne przeładowanie. `npm run cases`: 10/10, brak spraw w `cases-private/`. E2E: 26/26. Serwer E2E z `PARAMS_STORE=memory`. |
 | KAN-33 | 85d375e | `docs/opis-projektu.md` (problem, rozwiązanie, tabela pokrycia wymagań a–j + symulacje + admin + formalne/techniczne, mermaid, jak testować, AI – w działaniu brak, w procesie Claude Code, biblioteki z licencjami, źródła, ograniczenia, potencjał), README ze skrótem i linkami, 20 zrzutów `docs/screens/*.jpg` (desktop + iPhone 13) generowanych `npm run screens` (`playwright.screens.config.ts`, `scripts/screens`) | Linki do demo, filmu i prezentacji to placeholdery – uzupełnić po deployu (Vercel) i KAN-34/35. Po zmianach UI odśwież zrzuty `npm run screens`. |
 | KAN-34 | a4007b0 | `docs/prezentacja.html` (10 slajdów, jeden plik, ← → / N notatki / F pełny ekran, druk = 10 stron PDF, zrzuty z `docs/screens`), `docs/prezentacja.md` (treść + notatki), `docs/pitch-notatki.md` (tekst na 3 min, wersja 60 s, 10 pytań Q&A, lista prób) | **Zadanie w In Progress – czeka na próby zespołu.** Imiona zespołu i linki do demo/filmu do uzupełnienia na slajdach 1 i 10. |
+| KAN-35 | __SHA__ | `docs/film-skrypt.md` (tabela 2:45: czas → ekran/akcja → lektor → napis; dane demo, przygotowanie, lista 9 ujęć desktop/mobile z kolejnością kliknięć, instrukcja publikacji), strona `/o-projekcie` z osadzaniem filmu (`src/data/project.ts` → `videoUrl`, YouTube przez youtube-nocookie), `e2e/film.spec.ts` przechodzi ścieżkę filmu i pilnuje etykiet; footer: link „O projekcie (film)”, `/admin` bez prefetch | **Zadanie w In Progress – czeka na nagranie i publikację przez zespół.** Po publikacji: wkleić link w `src/data/project.ts`, README, opisie, slajdzie 10. |
 
 ## Do zrobienia (stan na 2026-11-21)
 
@@ -45,7 +46,7 @@ Zadania w Jirze, w kolejności (Rank):
 | Zadanie | Temat | Wskazówki |
 |---------|-------|-----------|
 | KAN-34 | Próby prezentacji (ręczne) | Materiały gotowe (`docs/prezentacja.html`, `docs/pitch-notatki.md`); zespół robi 3 próby i przenosi zadanie do Done. |
-| KAN-35 | Film ≤ 3 min | Skrypt może korzystać z `/demo/anna`, `/demo/ola`, `/kalkulator`, `/sprawy`, `/admin`. |
+| KAN-35 | Nagranie i publikacja filmu (ręczne) | Skrypt i plan ujęć: `docs/film-skrypt.md`. Link wkleić w `src/data/project.ts` (`videoUrl`), README, opisie i slajdzie 10. |
 | KAN-36–38 | P2: odczyt PDF przez AI, asystent AI, PWA/.ics | Opcjonalne. |
 
 ## Ważne decyzje i pułapki
