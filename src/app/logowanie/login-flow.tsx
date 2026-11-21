@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import type { ParentData, Scenario } from "@/engine/types";
-import { useCaseStore } from "@/store/caseStore";
+import { useCaseStore } from "@/store/useCaseStore";
 
 interface PersonaSummary {
   id: string;

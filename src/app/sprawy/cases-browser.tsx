@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { CaseFile } from "@/engine/types";
-import { useCaseStore } from "@/store/caseStore";
+import { useCaseStore } from "@/store/useCaseStore";
 
 interface CaseSummary {
   id: string;
@@ -149,7 +149,7 @@ export function CasesBrowser() {
           </DialogHeader>
           <DialogFooter>
             <Button asChild>
-              <Link href="/start">Przejdź do formularza</Link>
+              <Link href="/kreator">Przejdź do formularza</Link>
             </Button>
           </DialogFooter>
         </DialogContent>

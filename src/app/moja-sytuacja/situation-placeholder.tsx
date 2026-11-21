@@ -5,7 +5,7 @@ import { CaseComparison } from "@/components/case-comparison";
 import { LogoutButton } from "@/components/logout-button";
 import { SimulationBadge } from "@/components/simulation-badge";
 import { Button } from "@/components/ui/button";
-import { useCaseStore } from "@/store/caseStore";
+import { useCaseStore } from "@/store/useCaseStore";
 
 // Temporary view; KAN-25 builds the full "Moja sytuacja" screen.
 export function SituationPlaceholder() {
@@ -38,7 +38,7 @@ export function SituationPlaceholder() {
       <p>
         Dane: <strong>{displayName}</strong> – {parents.length === 2 ? "dwoje rodziców" : "jeden rodzic"}, scenariusz: {scenario?.kind}.
       </p>
-      {source === "case" && caseOrigin === "private" && <p className="text-sm font-medium">Sprawa testowa ZUS (lokalnie)</p>}
+      {source === "sprawa" && caseOrigin === "private" && <p className="text-sm font-medium">Sprawa testowa ZUS (lokalnie)</p>}
       {caseFile?.expected && <CaseComparison caseFile={caseFile} />}
       <p className="text-muted-foreground text-sm">Pełny ekran z uprawnieniami i ostrzeżeniami powstanie w kolejnym kroku.</p>
     </div>

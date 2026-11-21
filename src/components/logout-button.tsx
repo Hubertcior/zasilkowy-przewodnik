@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { useCaseStore } from "@/store/caseStore";
+import { useCaseStore } from "@/store/useCaseStore";
 
 /** Clears the simulated session cookie and the client-side case store. */
 export function LogoutButton({ className }: { className?: string }) {
