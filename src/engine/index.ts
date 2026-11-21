@@ -1,2 +1,2 @@
-// Czysta logika zasiłków (chorobowy w ciąży, macierzyński). Bez importów React/Next.
-export {};
+// Pure benefits logic (pregnancy sickness benefit, maternity benefit). No React/Next imports.
+export type * from "./types";
