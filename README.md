@@ -1,6 +1,23 @@
 # Zasiłkowy Przewodnik Przyszłego Rodzica
 
-Aplikacja webowa (RWD) przygotowana na HackNation 2026 (zadanie ZUS), która indywidualnie ustala uprawnienia i wylicza zasiłki z ubezpieczenia chorobowego dla przyszłych rodziców — zasiłek chorobowy w okresie ciąży oraz zasiłek macierzyński we wszystkich wariantach — prowadzi przez składanie wniosków i symuluje integracje z mObywatelem, danymi ZUS, PUE i e-ZLA. Stos: Next.js (UI + REST API), TypeScript, Tailwind CSS, shadcn/ui.
+**Jedno miejsce, w którym przyszły rodzic sprawdza swoje prawo do zasiłków, widzi ich wysokość na osi czasu i dostaje gotowe wnioski – z wyjaśnieniem każdego wyliczenia i podstawą prawną.**
+
+Aplikacja webowa (RWD) na HackNation 2026, zadanie ZUS. Indywidualnie ustala uprawnienia i wylicza zasiłek chorobowy w ciąży oraz zasiłek macierzyński we wszystkich wariantach (oboje rodzice, łączenie z pracą, wieloraczki, „Za życiem”, wcześniak, adopcja, piecza) w jednym zintegrowanym kalkulatorze. Prowadzi przez dokumenty i wnioski, ostrzega przed utratą uprawnień, pomaga w trudnych sytuacjach i symuluje integracje (mObywatel, dane ZUS, PUE/eZUS, e-ZLA). Przepisy są parametrami edytowanymi w panelu administracyjnym.
+
+| | |
+|---|---|
+| 📄 Szczegółowy opis projektu | [docs/opis-projektu.md](docs/opis-projektu.md) – pokrycie wymagań ZUS, architektura, AI, rozwiązania zewnętrzne, zrzuty |
+| 🌐 Demo | _uzupełnić po wdrożeniu na Vercel_ – hasło panelu admina: `demo-zus` |
+| 🎬 Film (≤ 3 min) | _wkrótce_ |
+| 📊 Prezentacja | _wkrótce_ |
+| 🔌 REST API | [docs/api.md](docs/api.md) |
+| 🤖 AI | aplikacja **nie używa AI w działaniu** (wyliczenia są regułowe); AI (Claude) wspierało tworzenie kodu – szczegóły w opisie, rozdz. 6 |
+
+![Kalkulator](docs/screens/04-kalkulator-desktop.jpg)
+
+**Szybki test:** `/demo/anna` (umowa o pracę, ciąża), `/demo/kasia` (działalność, po porodzie), `/demo/ola` (brak prawa do zasiłku), `/sprawy` (wybór lub upload przykładowej sprawy z porównaniem do wyniku ZUS), `/kalkulator`, `/admin`.
+
+Stos: Next.js 16 (UI + REST API), TypeScript, Tailwind CSS 4, shadcn/ui, zod, vitest, Playwright.
 
 ## Uruchomienie
 
@@ -12,6 +29,7 @@ npm run typecheck
 npm run build
 npm run cases      # runner przykładowych spraw (fixtures + cases-private)
 npm run e2e        # testy E2E Playwright (build + start na porcie 3100, desktop 1440×900 i iPhone 13)
+npm run screens    # zrzuty ekranu do docs/screens
 ```
 
 Przed pierwszym `npm run e2e` pobierz przeglądarkę: `npx playwright install chromium`. Raport: `npx playwright show-report`.
@@ -20,6 +38,9 @@ Ręczne testy przed demo: [docs/checklista-reczna.md](docs/checklista-reczna.md)
 ## Struktura
 
 - `src/engine/` — czysta logika zasiłków (bez React/Next)
+- `src/forms/` — definicje wniosków (urlopy, ZAM, odpis aktu urodzenia)
+- `src/data/` — organizacje charytatywne i przydatne linki (ze źródłem i datą weryfikacji)
+- `e2e/` — testy E2E (Playwright); `scripts/screens/` — zrzuty ekranu
 - `src/config/params.default.json` — domyślne parametry
 - `src/server/` — magazyn parametrów i mocki integracji
 - `src/app/api/` — REST API
