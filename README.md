@@ -10,6 +10,7 @@ npm run dev      # http://localhost:3000
 npm test         # testy (vitest)
 npm run typecheck
 npm run build
+npm run cases      # runner przykładowych spraw (fixtures + cases-private)
 ```
 
 ## Struktura
@@ -39,6 +40,10 @@ Stawki i wymiary są w `src/config/params.default.json`, nie w kodzie. W runtime
 | GET | `/api/params/history` | historia zmian |
 
 Skopiuj `.env.example` do `.env.local` i ustaw `ADMIN_PASSWORD`.
+
+## Przykładowe sprawy
+
+Syntetyczne sprawy demo są w `src/fixtures/cases`, a prywatne sprawy ZUS tylko lokalnie w `cases-private/`. Opis: [docs/przyklady-zus.md](docs/przyklady-zus.md). REST API: [docs/api.md](docs/api.md).
 
 ## Deploy (Vercel)
 

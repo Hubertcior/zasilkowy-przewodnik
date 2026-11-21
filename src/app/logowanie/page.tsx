@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageContainer } from "@/components/page-container";
 import { LoginFlow } from "./login-flow";
 
 export const metadata: Metadata = {
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:py-12">
+    <PageContainer>
       <LoginFlow />
-    </main>
+    </PageContainer>
   );
 }
