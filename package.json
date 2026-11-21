@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cases": "vitest run --config vitest.cases.config.mts"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.8",

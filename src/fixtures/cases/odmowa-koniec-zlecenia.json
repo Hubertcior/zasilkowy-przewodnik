@@ -1,0 +1,80 @@
+{
+  "id": "odmowa-koniec-zlecenia",
+  "title": "Odmowa – zlecenie zakończone przed porodem",
+  "description": "Umowa zlecenie z dobrowolnym chorobowym zakończona 2026-02-28, poród 2026-03-10. W dniu porodu brak ubezpieczenia chorobowego – zasiłek macierzyński nie przysługuje.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 27,
+      "periods": [
+        {
+          "title": "zlecenie",
+          "sickness": "dobrowolne",
+          "from": "2024-01-01",
+          "to": "2026-02-28",
+          "payerInsuredCount": 3
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 4800
+        },
+        {
+          "month": "2025-04",
+          "gross": 4800
+        },
+        {
+          "month": "2025-05",
+          "gross": 4800
+        },
+        {
+          "month": "2025-06",
+          "gross": 4800
+        },
+        {
+          "month": "2025-07",
+          "gross": 4800
+        },
+        {
+          "month": "2025-08",
+          "gross": 4800
+        },
+        {
+          "month": "2025-09",
+          "gross": 4800
+        },
+        {
+          "month": "2025-10",
+          "gross": 4800
+        },
+        {
+          "month": "2025-11",
+          "gross": 4800
+        },
+        {
+          "month": "2025-12",
+          "gross": 4800
+        },
+        {
+          "month": "2026-01",
+          "gross": 4800
+        },
+        {
+          "month": "2026-02",
+          "gross": 4800
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false
+  },
+  "expected": {
+    "granted": false
+  }
+}

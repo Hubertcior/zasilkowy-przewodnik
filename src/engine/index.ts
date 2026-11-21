@@ -9,4 +9,5 @@ export * from "./pregnancy";
 export * from "./warnings";
 export * from "./schemas";
 export * from "./calculate";
+export * from "./cases";
 export * from "./params";

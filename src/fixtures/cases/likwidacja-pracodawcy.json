@@ -1,0 +1,80 @@
+{
+  "id": "likwidacja-pracodawcy",
+  "title": "Umowa rozwiązana w ciąży – likwidacja pracodawcy",
+  "description": "Umowa o pracę do 2025-12-31 rozwiązana z powodu likwidacji pracodawcy (12 osób). Zasiłek macierzyński przysługuje mimo braku ubezpieczenia w dniu porodu; wypłaca ZUS. Podstawa: średnia z miesięcy z wynagrodzeniem (6000 zł) → 5177,40 zł; bez wniosku o cały urlop 100%.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 32,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2021-01-01",
+          "payerName": "Drukarnia Sigma (w likwidacji)",
+          "payerInsuredCount": 12,
+          "to": "2025-12-31",
+          "terminationReason": "likwidacja"
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 6000
+        },
+        {
+          "month": "2025-04",
+          "gross": 6000
+        },
+        {
+          "month": "2025-05",
+          "gross": 6000
+        },
+        {
+          "month": "2025-06",
+          "gross": 6000
+        },
+        {
+          "month": "2025-07",
+          "gross": 6000
+        },
+        {
+          "month": "2025-08",
+          "gross": 6000
+        },
+        {
+          "month": "2025-09",
+          "gross": 6000
+        },
+        {
+          "month": "2025-10",
+          "gross": 6000
+        },
+        {
+          "month": "2025-11",
+          "gross": 6000
+        },
+        {
+          "month": "2025-12",
+          "gross": 6000
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false
+  },
+  "plan": {
+    "longApplication": false,
+    "parental": []
+  },
+  "expected": {
+    "granted": true,
+    "base": 5177.4,
+    "monthly": 5177.4
+  }
+}

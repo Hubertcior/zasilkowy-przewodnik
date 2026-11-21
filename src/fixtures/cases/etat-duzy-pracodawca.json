@@ -1,0 +1,160 @@
+{
+  "id": "etat-duzy-pracodawca",
+  "title": "Etat u dużego pracodawcy – długi wniosek, ojciec 9 tygodni",
+  "description": "Matka na umowie o pracę od 2019 r. u płatnika zgłaszającego 120 osób, 7000 zł brutto przez 12 miesięcy. Wniosek o cały urlop w ciągu 21 dni. Wyliczenie: 7000 × (1 − 13,71%) = 6040,30 zł podstawy; 81,5% = 4922,84 zł miesięcznie. Wypłaca pracodawca (płatnik > 20 osób).",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 33,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2019-03-01",
+          "payerName": "Nordlog Sp. z o.o.",
+          "payerInsuredCount": 120
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 7000
+        },
+        {
+          "month": "2025-04",
+          "gross": 7000
+        },
+        {
+          "month": "2025-05",
+          "gross": 7000
+        },
+        {
+          "month": "2025-06",
+          "gross": 7000
+        },
+        {
+          "month": "2025-07",
+          "gross": 7000
+        },
+        {
+          "month": "2025-08",
+          "gross": 7000
+        },
+        {
+          "month": "2025-09",
+          "gross": 7000
+        },
+        {
+          "month": "2025-10",
+          "gross": 7000
+        },
+        {
+          "month": "2025-11",
+          "gross": 7000
+        },
+        {
+          "month": "2025-12",
+          "gross": 7000
+        },
+        {
+          "month": "2026-01",
+          "gross": 7000
+        },
+        {
+          "month": "2026-02",
+          "gross": 7000
+        }
+      ]
+    },
+    {
+      "role": "ojciec",
+      "age": 35,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2017-09-01",
+          "payerName": "Firma Ojca Sp. z o.o.",
+          "payerInsuredCount": 40
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 9000
+        },
+        {
+          "month": "2025-04",
+          "gross": 9000
+        },
+        {
+          "month": "2025-05",
+          "gross": 9000
+        },
+        {
+          "month": "2025-06",
+          "gross": 9000
+        },
+        {
+          "month": "2025-07",
+          "gross": 9000
+        },
+        {
+          "month": "2025-08",
+          "gross": 9000
+        },
+        {
+          "month": "2025-09",
+          "gross": 9000
+        },
+        {
+          "month": "2025-10",
+          "gross": 9000
+        },
+        {
+          "month": "2025-11",
+          "gross": 9000
+        },
+        {
+          "month": "2025-12",
+          "gross": 9000
+        },
+        {
+          "month": "2026-01",
+          "gross": 9000
+        },
+        {
+          "month": "2026-02",
+          "gross": 9000
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false
+  },
+  "plan": {
+    "longApplication": true,
+    "parental": [
+      {
+        "parent": "matka",
+        "weeks": 32
+      },
+      {
+        "parent": "ojciec",
+        "weeks": 9
+      }
+    ],
+    "paternityWeeks": 2
+  },
+  "expected": {
+    "granted": true,
+    "base": 6040.3,
+    "monthly": 4922.84,
+    "notes": "81,5% od podstawy 6040,30 zł"
+  }
+}

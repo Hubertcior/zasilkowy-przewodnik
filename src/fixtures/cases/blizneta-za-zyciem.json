@@ -1,0 +1,91 @@
+{
+  "id": "blizneta-za-zyciem",
+  "title": "Bliźnięta z zaświadczeniem „Za życiem”",
+  "description": "Etat 8000 zł, poród bliźniąt z zaświadczeniem „Za życiem”: urlop macierzyński 31 tygodni, rodzicielski 67 tygodni. Podstawa 8000 × 0,8629 = 6903,20 zł; bez wniosku o cały urlop macierzyński 100%.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 31,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2018-01-01",
+          "payerName": "Softline S.A.",
+          "payerInsuredCount": 500
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 8000
+        },
+        {
+          "month": "2025-04",
+          "gross": 8000
+        },
+        {
+          "month": "2025-05",
+          "gross": 8000
+        },
+        {
+          "month": "2025-06",
+          "gross": 8000
+        },
+        {
+          "month": "2025-07",
+          "gross": 8000
+        },
+        {
+          "month": "2025-08",
+          "gross": 8000
+        },
+        {
+          "month": "2025-09",
+          "gross": 8000
+        },
+        {
+          "month": "2025-10",
+          "gross": 8000
+        },
+        {
+          "month": "2025-11",
+          "gross": 8000
+        },
+        {
+          "month": "2025-12",
+          "gross": 8000
+        },
+        {
+          "month": "2026-01",
+          "gross": 8000
+        },
+        {
+          "month": "2026-02",
+          "gross": 8000
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 2,
+    "zaZyciem": true
+  },
+  "plan": {
+    "longApplication": false,
+    "parental": [
+      {
+        "parent": "matka",
+        "weeks": 58
+      }
+    ]
+  },
+  "expected": {
+    "granted": true,
+    "base": 6903.2,
+    "monthly": 6903.2
+  }
+}

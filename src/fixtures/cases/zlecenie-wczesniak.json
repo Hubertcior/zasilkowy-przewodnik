@@ -1,0 +1,96 @@
+{
+  "id": "zlecenie-wczesniak",
+  "title": "Umowa zlecenie, wcześniak (30. tydzień, 1400 g)",
+  "description": "Zlecenie z dobrowolnym chorobowym od 2023 r., przychód 5500 zł, płatnik zgłasza 8 osób – wypłaca ZUS (ZAM + Z-3a). Dziecko urodzone w 30. tygodniu, 1400 g, 5 tygodni w szpitalu → 5 tygodni urlopu uzupełniającego. Podstawa 5500 × 0,8629 = 4745,95 zł; 81,5% = 3867,95 zł.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 28,
+      "periods": [
+        {
+          "title": "zlecenie",
+          "sickness": "dobrowolne",
+          "from": "2023-01-01",
+          "payerName": "Agencja Kropka",
+          "payerInsuredCount": 8
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 5500
+        },
+        {
+          "month": "2025-04",
+          "gross": 5500
+        },
+        {
+          "month": "2025-05",
+          "gross": 5500
+        },
+        {
+          "month": "2025-06",
+          "gross": 5500
+        },
+        {
+          "month": "2025-07",
+          "gross": 5500
+        },
+        {
+          "month": "2025-08",
+          "gross": 5500
+        },
+        {
+          "month": "2025-09",
+          "gross": 5500
+        },
+        {
+          "month": "2025-10",
+          "gross": 5500
+        },
+        {
+          "month": "2025-11",
+          "gross": 5500
+        },
+        {
+          "month": "2025-12",
+          "gross": 5500
+        },
+        {
+          "month": "2026-01",
+          "gross": 5500
+        },
+        {
+          "month": "2026-02",
+          "gross": 5500
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false,
+    "prematurity": {
+      "gestationWeek": 30,
+      "birthWeightG": 1400,
+      "hospitalWeeks": 5
+    }
+  },
+  "plan": {
+    "longApplication": true,
+    "parental": [
+      {
+        "parent": "matka",
+        "weeks": 32
+      }
+    ]
+  },
+  "expected": {
+    "granted": true,
+    "base": 4745.95,
+    "monthly": 3867.95
+  }
+}

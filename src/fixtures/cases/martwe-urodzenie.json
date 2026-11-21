@@ -1,0 +1,87 @@
+{
+  "id": "martwe-urodzenie",
+  "title": "Martwe urodzenie – 8 tygodni urlopu macierzyńskiego",
+  "description": "Etat 6000 zł. Martwe urodzenie: urlop macierzyński 8 tygodni po porodzie, rodzicielski nie przysługuje. Podstawa 5177,40 zł, zasiłek 100%.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 34,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2016-04-01",
+          "payerName": "Urząd Gminy (fikcyjny)",
+          "payerInsuredCount": 60
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 6000
+        },
+        {
+          "month": "2025-04",
+          "gross": 6000
+        },
+        {
+          "month": "2025-05",
+          "gross": 6000
+        },
+        {
+          "month": "2025-06",
+          "gross": 6000
+        },
+        {
+          "month": "2025-07",
+          "gross": 6000
+        },
+        {
+          "month": "2025-08",
+          "gross": 6000
+        },
+        {
+          "month": "2025-09",
+          "gross": 6000
+        },
+        {
+          "month": "2025-10",
+          "gross": 6000
+        },
+        {
+          "month": "2025-11",
+          "gross": 6000
+        },
+        {
+          "month": "2025-12",
+          "gross": 6000
+        },
+        {
+          "month": "2026-01",
+          "gross": 6000
+        },
+        {
+          "month": "2026-02",
+          "gross": 6000
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false,
+    "stillbirth": true
+  },
+  "plan": {
+    "longApplication": false,
+    "parental": []
+  },
+  "expected": {
+    "granted": true,
+    "base": 5177.4,
+    "monthly": 5177.4
+  }
+}

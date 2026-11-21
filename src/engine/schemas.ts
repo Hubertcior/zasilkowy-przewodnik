@@ -124,3 +124,21 @@ export const PregnancyRequestSchema = z.object({
 export type EligibilityRequest = z.infer<typeof EligibilityRequestSchema>;
 export type CalculateRequest = z.infer<typeof CalculateRequestSchema>;
 export type PregnancyRequest = z.infer<typeof PregnancyRequestSchema>;
+
+export const CaseFileSchema = z.object({
+  id: z.string().regex(/^[a-z0-9-]{1,60}$/, "id: małe litery, cyfry i myślniki"),
+  title: z.string().min(1).max(200),
+  description: z.string().max(4000),
+  synthetic: z.boolean(),
+  parents: parentsArray,
+  scenario: ScenarioSchema,
+  plan: LeavePlanSchema.optional(),
+  expected: z
+    .object({
+      granted: z.boolean(),
+      base: money.optional(),
+      monthly: money.optional(),
+      notes: z.string().max(2000).optional(),
+    })
+    .optional(),
+});

@@ -1,0 +1,93 @@
+{
+  "id": "laczenie-z-praca",
+  "title": "Łączenie urlopu rodzicielskiego z pracą na 1/2 etatu",
+  "description": "Etat 7000 zł. Po 20 tygodniach macierzyńskiego (100% = 6040,30 zł) matka bierze 16 tygodni rodzicielskiego, pracując na 1/2 etatu – urlop wydłuża się do 32 tygodni, zasiłek 70% × 0,5 = 2114,11 zł miesięcznie.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 30,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2019-01-01",
+          "payerName": "Biuro Rachunkowe Plus",
+          "payerInsuredCount": 25
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 7000
+        },
+        {
+          "month": "2025-04",
+          "gross": 7000
+        },
+        {
+          "month": "2025-05",
+          "gross": 7000
+        },
+        {
+          "month": "2025-06",
+          "gross": 7000
+        },
+        {
+          "month": "2025-07",
+          "gross": 7000
+        },
+        {
+          "month": "2025-08",
+          "gross": 7000
+        },
+        {
+          "month": "2025-09",
+          "gross": 7000
+        },
+        {
+          "month": "2025-10",
+          "gross": 7000
+        },
+        {
+          "month": "2025-11",
+          "gross": 7000
+        },
+        {
+          "month": "2025-12",
+          "gross": 7000
+        },
+        {
+          "month": "2026-01",
+          "gross": 7000
+        },
+        {
+          "month": "2026-02",
+          "gross": 7000
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false
+  },
+  "plan": {
+    "longApplication": false,
+    "parental": [
+      {
+        "parent": "matka",
+        "weeks": 16,
+        "workFraction": 0.5
+      }
+    ]
+  },
+  "expected": {
+    "granted": true,
+    "base": 6040.3,
+    "monthly": 6040.3,
+    "notes": "rodzicielski przy pracy na 1/2 etatu: 2114,11 zł/mies. przez 32 tygodnie"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "jdg-bez-chorobowego",
+  "title": "JDG bez dobrowolnego chorobowego – odmowa",
+  "description": "Działalność gospodarcza bez dobrowolnego ubezpieczenia chorobowego. W dniu porodu brak ubezpieczenia chorobowego, więc zasiłek macierzyński nie przysługuje.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 30,
+      "periods": [
+        {
+          "title": "dzialalnosc",
+          "sickness": "brak",
+          "from": "2022-05-01"
+        }
+      ],
+      "incomes": [],
+      "declaredBase": [
+        {
+          "month": "2025-03",
+          "amount": 4500
+        },
+        {
+          "month": "2025-04",
+          "amount": 4500
+        },
+        {
+          "month": "2025-05",
+          "amount": 4500
+        },
+        {
+          "month": "2025-06",
+          "amount": 4500
+        },
+        {
+          "month": "2025-07",
+          "amount": 4500
+        },
+        {
+          "month": "2025-08",
+          "amount": 4500
+        },
+        {
+          "month": "2025-09",
+          "amount": 4500
+        },
+        {
+          "month": "2025-10",
+          "amount": 4500
+        },
+        {
+          "month": "2025-11",
+          "amount": 4500
+        },
+        {
+          "month": "2025-12",
+          "amount": 4500
+        },
+        {
+          "month": "2026-01",
+          "amount": 4500
+        },
+        {
+          "month": "2026-02",
+          "amount": 4500
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "urodzenie",
+    "birthDate": "2026-03-10",
+    "children": 1,
+    "zaZyciem": false
+  },
+  "expected": {
+    "granted": false
+  }
+}

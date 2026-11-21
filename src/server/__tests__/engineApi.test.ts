@@ -92,8 +92,8 @@ describe("engine API", () => {
     expect(res.status).toBe(400);
   });
 
-  it("GET /api/cases → empty list; GET /api/cases/:id → 404", async () => {
-    expect(await (await listCases()).json()).toEqual([]);
+  it("GET /api/cases → list; unknown GET /api/cases/:id → 404", async () => {
+    expect((await (await listCases()).json()).length).toBeGreaterThan(0);
     const res = await getCase(new Request("http://localhost/api/cases/x"), { params: Promise.resolve({ id: "x" }) });
     expect(res.status).toBe(404);
   });

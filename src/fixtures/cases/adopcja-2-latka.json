@@ -1,0 +1,161 @@
+{
+  "id": "adopcja-2-latka",
+  "title": "Adopcja 2-letniego dziecka – oboje na etacie",
+  "description": "Przyjęcie 2-letniego dziecka (przysposobienie). Urlop na warunkach macierzyńskiego 20 tygodni, rodzicielski 41. Matka 6500 zł → podstawa 5608,85 zł; wniosek o cały urlop 81,5% = 4571,21 zł.",
+  "synthetic": true,
+  "parents": [
+    {
+      "role": "matka",
+      "age": 37,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2014-06-01",
+          "payerName": "Bank Mazowsze",
+          "payerInsuredCount": 300
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 6500
+        },
+        {
+          "month": "2025-04",
+          "gross": 6500
+        },
+        {
+          "month": "2025-05",
+          "gross": 6500
+        },
+        {
+          "month": "2025-06",
+          "gross": 6500
+        },
+        {
+          "month": "2025-07",
+          "gross": 6500
+        },
+        {
+          "month": "2025-08",
+          "gross": 6500
+        },
+        {
+          "month": "2025-09",
+          "gross": 6500
+        },
+        {
+          "month": "2025-10",
+          "gross": 6500
+        },
+        {
+          "month": "2025-11",
+          "gross": 6500
+        },
+        {
+          "month": "2025-12",
+          "gross": 6500
+        },
+        {
+          "month": "2026-01",
+          "gross": 6500
+        },
+        {
+          "month": "2026-02",
+          "gross": 6500
+        }
+      ]
+    },
+    {
+      "role": "ojciec",
+      "age": 39,
+      "periods": [
+        {
+          "title": "umowa_o_prace",
+          "sickness": "obowiazkowe",
+          "from": "2012-10-01",
+          "payerName": "Energa-Sieci",
+          "payerInsuredCount": 300
+        }
+      ],
+      "incomes": [
+        {
+          "month": "2025-03",
+          "gross": 7500
+        },
+        {
+          "month": "2025-04",
+          "gross": 7500
+        },
+        {
+          "month": "2025-05",
+          "gross": 7500
+        },
+        {
+          "month": "2025-06",
+          "gross": 7500
+        },
+        {
+          "month": "2025-07",
+          "gross": 7500
+        },
+        {
+          "month": "2025-08",
+          "gross": 7500
+        },
+        {
+          "month": "2025-09",
+          "gross": 7500
+        },
+        {
+          "month": "2025-10",
+          "gross": 7500
+        },
+        {
+          "month": "2025-11",
+          "gross": 7500
+        },
+        {
+          "month": "2025-12",
+          "gross": 7500
+        },
+        {
+          "month": "2026-01",
+          "gross": 7500
+        },
+        {
+          "month": "2026-02",
+          "gross": 7500
+        }
+      ]
+    }
+  ],
+  "scenario": {
+    "kind": "adopcja",
+    "acceptDate": "2026-03-10",
+    "children": 1,
+    "childAges": [
+      2
+    ]
+  },
+  "plan": {
+    "longApplication": true,
+    "parental": [
+      {
+        "parent": "matka",
+        "weeks": 32
+      },
+      {
+        "parent": "ojciec",
+        "weeks": 9
+      }
+    ],
+    "paternityWeeks": 2
+  },
+  "expected": {
+    "granted": true,
+    "base": 5608.85,
+    "monthly": 4571.21
+  }
+}

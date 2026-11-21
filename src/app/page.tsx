@@ -12,6 +12,9 @@ export default function Home() {
         <Button asChild size="lg">
           <Link href="/logowanie">Zaloguj się przez mObywatel (symulacja)</Link>
         </Button>
+        <Button asChild size="lg" variant="outline">
+          <Link href="/sprawy">Przykładowe sprawy</Link>
+        </Button>
       </div>
     </main>
   );
