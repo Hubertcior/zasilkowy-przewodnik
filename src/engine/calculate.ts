@@ -1,6 +1,7 @@
 import { calcBase, type BaseResult } from "./base";
 import { checkEligibility, scenarioDate, type EligibilityResult } from "./eligibility";
 import { calcEntitlement, type Entitlement } from "./entitlement";
+import { round2 } from "./money";
 import type { Params } from "./params";
 import { calcPregnancy, type PregnancyResult } from "./pregnancy";
 import { buildSchedule, type ScheduleParent, type ScheduleResult } from "./schedule";
@@ -10,8 +11,19 @@ import { collectWarnings } from "./warnings";
 
 type Role = "matka" | "ojciec";
 
+export interface RateVariants {
+  /** Monthly benefit with the long application (81.5%). */
+  longApplication: number;
+  /** Monthly maternity benefit without it (100%). */
+  maternity100: number;
+  /** Monthly parental benefit without it (70%). */
+  parental70: number;
+}
+
 export interface CalculateResult {
   bases: Partial<Record<Role, BaseResult>>;
+  /** Monthly amounts per role in both rate variants (for the summary screen). */
+  rateVariants: Partial<Record<Role, RateVariants>>;
   eligibility: Partial<Record<Role, EligibilityResult>>;
   entitlement: Entitlement;
   plan: LeavePlan;
@@ -57,6 +69,7 @@ export function baseFor(parent: ParentData, scenario: Scenario, eligibility: Eli
 export function calculateAll(req: CalculateRequest, params: Params): CalculateResult {
   const { parents, scenario } = req;
   const bases: CalculateResult["bases"] = {};
+  const rateVariants: CalculateResult["rateVariants"] = {};
   const eligibility: CalculateResult["eligibility"] = {};
   const sched: Partial<Record<Role, ScheduleParent>> = {};
 
@@ -65,6 +78,11 @@ export function calculateAll(req: CalculateRequest, params: Params): CalculateRe
     const b = baseFor(parent, scenario, e, params, req.baseOverride?.[parent.role]);
     eligibility[parent.role] = e;
     bases[parent.role] = b;
+    rateVariants[parent.role] = {
+      longApplication: round2(b.base * params.rates.longApplication),
+      maternity100: round2(b.base * params.rates.maternity),
+      parental70: round2(b.base * params.rates.parental),
+    };
     sched[parent.role] = { data: parent, base: b.base, payer: e.payer, eligible: e.maternityEligible };
   }
 
@@ -75,7 +93,7 @@ export function calculateAll(req: CalculateRequest, params: Params): CalculateRe
     { parents, scenario, plan, eligibility: eligibility as Record<string, EligibilityResult>, today: req.today ?? today() },
     params,
   );
-  return { bases, eligibility, entitlement, plan, schedule, warnings };
+  return { bases, rateVariants, eligibility, entitlement, plan, schedule, warnings };
 }
 
 export interface PregnancyCalcResult extends PregnancyResult {

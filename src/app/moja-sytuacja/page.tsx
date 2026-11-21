@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { PageContainer } from "@/components/page-container";
-import { SituationPlaceholder } from "./situation-placeholder";
+import { SituationView } from "./situation-view";
 
 export const metadata: Metadata = { title: "Moja sytuacja – Zasiłkowy Przewodnik" };
 
 export default function SituationPage() {
   return (
     <PageContainer>
-      <SituationPlaceholder />
+      <SituationView />
     </PageContainer>
   );
 }

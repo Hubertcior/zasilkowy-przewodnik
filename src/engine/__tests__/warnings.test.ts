@@ -90,8 +90,9 @@ describe("collectWarnings", () => {
 
   it("niewykorzystane-9-tygodni and lacze-prace from the plan", () => {
     const plan: LeavePlan = { longApplication: true, parental: [{ parent: "matka", weeks: 32, workFraction: 0.5 }, { parent: "ojciec", weeks: 4 }] };
-    const w = ids(warn([employee()], pregnant, plan));
+    const w = ids(warn([employee(), { ...employee(), role: "ojciec" }], pregnant, plan));
     expect(w).toContain("niewykorzystane-9-tygodni");
+    expect(ids(warn([employee()], pregnant, plan))).not.toContain("niewykorzystane-9-tygodni");
     expect(w).toContain("lacze-prace");
   });
 

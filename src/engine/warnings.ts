@@ -212,7 +212,7 @@ export function collectWarnings(ctx: WarningContext, params: Params): Warning[] 
   // --- niewykorzystane-9-tygodni --------------------------------------------------------------
   if (plan) {
     const fatherWeeks = plan.parental.filter((x) => x.parent === "ojciec").reduce((s, x) => s + x.weeks, 0);
-    if (fatherWeeks < params.nonTransferableWeeks) {
+    if (father && fatherWeeks < params.nonTransferableWeeks) {
       add({
         id: "niewykorzystane-9-tygodni",
         severity: "info",
