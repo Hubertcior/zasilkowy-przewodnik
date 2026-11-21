@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import defaults from "@/config/params.default.json";
-import { round2 } from "@/engine/math";
+import { round2 } from "@/engine/money";
 import { maxBaseNonEmployee, minBase, ParamsSchema } from "@/engine/params";
 
 describe("params.default.json", () => {

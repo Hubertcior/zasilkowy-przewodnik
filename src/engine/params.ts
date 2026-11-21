@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { round2 } from "./math";
+import { round2 } from "./money";
 
 // All legal numbers (rates, periods, limits) live in Params, never as magic numbers in the engine.
 // Defaults: src/config/params.default.json. At runtime they come from ParamsStore (src/server).

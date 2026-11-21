@@ -14,16 +14,23 @@ export interface InsurancePeriod {
   payerName?: string;
   /** Number of people reported for sickness insurance by the payer (>20 → payer pays benefits). */
   payerInsuredCount?: number;
+  /** Employment fraction (etat), 1 = full time. Used to scale the employee minimum base. */
+  workTimeFraction?: number;
   terminationReason?: 'upadlosc' | 'likwidacja' | 'smierc_pracodawcy' | 'naruszenie_prawa_wyrok' | 'inne';
 }
 
 export interface MonthlyIncome {
   /** YYYY-MM */
   month: string;
+  /** Gross pay (brutto) included in the contribution base for this month. */
   gross: number;
   workedHalfOrMore?: boolean;
+  /** Fixed components at their full monthly (contractual) amount. */
   fixed?: number;
+  /** Variable components actually paid for the days worked. */
   variable?: number;
+  /** Components not included in the benefit base (e.g. paid also during benefit). Subtracted from gross. */
+  excluded?: number;
   daysWorked?: number;
   workingDays?: number;
 }
@@ -31,6 +38,7 @@ export interface MonthlyIncome {
 export interface PeriodicBonus {
   kind: 'kwartalna' | 'roczna';
   amount: number;
+  /** 'YYYY-Qn' for quarterly, 'YYYY' for annual */
   period: string;
 }
 
