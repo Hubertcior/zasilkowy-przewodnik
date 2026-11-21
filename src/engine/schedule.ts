@@ -218,7 +218,10 @@ function buildPeriods(ctx: BuildCtx): BenefitPeriod[] {
   }
 
   // --- Paternity (father, 100%) ------------------------------------------------------------------
-  const paternityWeeks = plan.paternityWeeks ?? 0;
+  // After a stillbirth there is no child to raise, so no paternity leave (art. 182³ KP: father raising the child).
+  const stillbirth = input.scenario.kind === "urodzenie" && !!input.scenario.stillbirth;
+  if (stillbirth && (plan.paternityWeeks ?? 0) > 0) notes.push("Po martwym urodzeniu urlop ojcowski nie przysługuje – pominięto go w planie.");
+  const paternityWeeks = stillbirth ? 0 : (plan.paternityWeeks ?? 0);
   if (paternityWeeks > 0) {
     if (paternityWeeks > ent.paternityWeeks) {
       errors.push(`Urlop ojcowski: maks. ${ent.paternityWeeks} tyg. (podano ${paternityWeeks}).`);
@@ -243,7 +246,11 @@ function totalsOf(periods: BenefitPeriod[]) {
 export function buildSchedule(input: ScheduleInput, entitlement: Entitlement, params: Params): ScheduleResult {
   const errors: string[] = [];
   const notes: string[] = [];
-  const long = input.plan.longApplication;
+  // After stillbirth / the only child's death there is no parental leave, so the 81.5% variant does not apply:
+  // the shortened maternity leave is paid at 100% (Poradnik ZUS dla rodziców 2026, s. 34; art. 180¹ KP).
+  const loss = entitlement.parentalWeeks === 0 && !!entitlement.childDeathRule;
+  const long = input.plan.longApplication && !loss;
+  if (loss && input.plan.longApplication) notes.push("Po martwym urodzeniu lub śmierci dziecka nie ma urlopu rodzicielskiego – wariant 81,5% nie ma zastosowania, zasiłek wynosi 100%.");
 
   const periods = buildPeriods({ input, ent: entitlement, p: params, long, errors, notes }).sort(
     (a, b) => a.from.localeCompare(b.from) || a.parent.localeCompare(b.parent),
@@ -253,7 +260,7 @@ export function buildSchedule(input: ScheduleInput, entitlement: Entitlement, pa
   const alt = buildPeriods({ input, ent: entitlement, p: params, long: !long, errors: [], notes: [] });
   const curTotal = totalsOf(periods).razem;
   const altTotal = totalsOf(alt).razem;
-  const comparison = {
+  const comparison = loss ? undefined : {
     longApplication: long ? curTotal : altTotal,
     separate: long ? altTotal : curTotal,
     difference: round2((long ? curTotal : altTotal) - (long ? altTotal : curTotal)),
@@ -296,9 +303,12 @@ export function buildSchedule(input: ScheduleInput, entitlement: Entitlement, pa
         "w wysokości proporcjonalnej do wymiaru urlopu (podstawa × stawka × (1 − część etatu)). Maksymalnie urlop może się wydłużyć dwukrotnie.",
     );
   }
+  if (comparison)
+    notes.push(
+      `Wariant z wnioskiem o cały urlop: ${formatPLN(comparison.longApplication)}; urlopy osobno (100% + 70%): ${formatPLN(comparison.separate)}; ` +
+        `różnica ${formatPLN(comparison.difference)}.`,
+    );
   notes.push(
-    `Wariant z wnioskiem o cały urlop: ${formatPLN(comparison.longApplication)}; urlopy osobno (100% + 70%): ${formatPLN(comparison.separate)}; ` +
-      `różnica ${formatPLN(comparison.difference)}.`,
     "Zasiłek za 1 dzień = 1/30 kwoty miesięcznej. Części urlopu rodzicielskiego ułożono kolejno po sobie.",
   );
 

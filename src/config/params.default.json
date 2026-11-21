@@ -65,7 +65,8 @@
   "childDeath": {
     "maternityWeeksIfBefore8Weeks": 8,
     "minDaysAfterDeath": 7,
-    "daysAfterDeathIfAfter8Weeks": 7
+    "daysAfterDeathIfAfter8Weeks": 7,
+    "funeralGrant": 7000
   },
   "pregnancy": {
     "employerPaidDays": { "under50": 33, "from50": 14 },

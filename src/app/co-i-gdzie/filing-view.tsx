@@ -178,6 +178,17 @@ export function FilingView() {
         <p className="text-muted-foreground text-xs">
           Wzory formularzy: <a className="underline" href="https://www.zus.pl/wzory-formularzy" target="_blank" rel="noopener noreferrer">zus.pl/wzory-formularzy</a>. Terminy wniosków o urlopy wg Kodeksu pracy i rozporządzenia Dz.U. 2025 poz. 322.
         </p>
+        <p className="text-muted-foreground text-sm">
+          Szczególna sytuacja (strata dziecka, wcześniak, choroba mamy, utrata pracy)? Zobacz{" "}
+          <Link href="/trudne-sytuacje" className="text-primary underline underline-offset-2">
+            Trudne sytuacje
+          </Link>
+          . Oficjalne strony ZUS, MRPiPS i PIP:{" "}
+          <Link href="/przydatne-linki" className="text-primary underline underline-offset-2">
+            Przydatne linki
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

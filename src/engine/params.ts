@@ -101,11 +101,13 @@ export const ParamsSchema = z.object({
     roundPartialWeekUp: z.boolean(),
   }),
 
-  /** Death of the child. Art. 180 § 4–5 KP. */
+  /** Stillbirth / pregnancy loss / death of the child. Art. 180¹ KP. */
   childDeath: z.object({
     maternityWeeksIfBefore8Weeks: positiveInt,
     minDaysAfterDeath: positiveInt,
     daysAfterDeathIfAfter8Weeks: positiveInt,
+    /** Funeral grant after stillbirth, regardless of pregnancy length (Poradnik ZUS dla rodziców 2026, s. 35). Default keeps older stored params valid. */
+    funeralGrant: z.number().positive().default(7000),
   }),
 
   pregnancy: z.object({

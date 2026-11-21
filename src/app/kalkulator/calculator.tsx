@@ -22,6 +22,7 @@ import type { CalculateResult } from "@/engine/calculate";
 import type { LeavePlan, ParentData, Scenario } from "@/engine/types";
 import { useToday } from "@/hooks/use-today";
 import { useCaseStore } from "@/store/useCaseStore";
+import { CALC_PRESETS, presetScenario, type CalcPreset } from "@/lib/calc-presets";
 import { MoneyChart } from "./money-chart";
 import { Timeline } from "./timeline";
 
@@ -43,6 +44,13 @@ function toCalcScenario(s: Scenario | undefined, today: string): CalcScenario {
   if (s.kind === "ciaza") return { kind: "urodzenie", birthDate: s.dueDate, children: 1, zaZyciem: false };
   return s;
 }
+
+const SPECIAL_TAKEOVER: { value: NonNullable<LeavePlan["specialTakeOver"]>; label: string; minWeeks: number }[] = [
+  { value: "szpital", label: "Mama w szpitalu (po min. 8 tyg. urlopu)", minWeeks: 8 },
+  { value: "niezdolnosc_do_samodzielnej_egzystencji", label: "Mama niezdolna do samodzielnej egzystencji (po min. 8 tyg.)", minWeeks: 8 },
+  { value: "porzucenie_dziecka", label: "Porzucenie dziecka przez mamę (po min. 8 tyg.)", minWeeks: 8 },
+  { value: "smierc_matki", label: "Śmierć mamy", minWeeks: 0 },
+];
 
 function Field({ label, htmlFor, children, hint }: { label: string; htmlFor?: string; children: ReactNode; hint?: string }) {
   return (
@@ -85,6 +93,27 @@ export function Calculator() {
       .then((p) => setParamsVersion(`${p.version} (od ${p.effectiveFrom})`))
       .catch(() => {});
   }, []);
+
+  // Deep-link preset (?sytuacja=…), applied once: scenario first, then the plan once the engine returned one.
+  const [preset, setPreset] = useState<CalcPreset | null>(null);
+  const presetApplied = useRef({ scenario: false, plan: false });
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("sytuacja");
+    if (q && (CALC_PRESETS as readonly string[]).includes(q)) queueMicrotask(() => setPreset(q as CalcPreset));
+  }, []);
+  useEffect(() => {
+    if (!preset || !sc || !todayStr || presetApplied.current.scenario) return;
+    presetApplied.current.scenario = true;
+    queueMicrotask(() => setScenario(presetScenario(preset, sc, todayStr)));
+  }, [preset, sc, todayStr]);
+  useEffect(() => {
+    if (!plan || presetApplied.current.plan || (preset !== "szpital-matki" && preset !== "smierc-matki")) return;
+    presetApplied.current.plan = true;
+    if (!hasStoreData) queueMicrotask(() => setQuickFather(true));
+    queueMicrotask(() =>
+      setPlan({ ...plan, fatherTakesOverFromWeek: preset === "smierc-matki" ? 4 : 8, specialTakeOver: preset === "smierc-matki" ? "smierc_matki" : "szpital" }),
+    );
+  }, [preset, plan, hasStoreData]);
 
   // Debounced POST /api/calculate on every change.
   useEffect(() => {
@@ -183,6 +212,25 @@ export function Calculator() {
                 </Field>
               </div>
             )}
+            <div className="flex items-center gap-2">
+              <Checkbox id="sb" checked={!!sc.stillbirth} onCheckedChange={(v) => updScenario({ stillbirth: v === true ? true : undefined, childDeath: undefined })} />
+              <Label htmlFor="sb" className="font-normal">
+                Martwe urodzenie / utrata ciąży
+              </Label>
+            </div>
+            {!sc.stillbirth && (
+              <div className="flex items-center gap-2">
+                <Checkbox id="cd" checked={!!sc.childDeath} onCheckedChange={(v) => updScenario({ childDeath: v === true ? { date: sc.birthDate } : undefined })} />
+                <Label htmlFor="cd" className="font-normal">
+                  Zgon dziecka
+                </Label>
+              </div>
+            )}
+            {sc.childDeath && (
+              <Field label="Data zgonu" htmlFor="cdd">
+                <Input id="cdd" type="date" min={sc.birthDate} value={sc.childDeath.date} onChange={(e) => e.target.value && updScenario({ childDeath: { date: e.target.value } })} />
+              </Field>
+            )}
           </>
         ) : (
           <div className="grid grid-cols-2 gap-2">
@@ -258,11 +306,31 @@ export function Calculator() {
                 </Label>
               </div>
               {plan.fatherTakesOverFromWeek !== undefined && (
-                <Field label={`Mama wykorzystuje tygodni (min. ${ent.obligatoryMotherWeeks}, maks. ${ent.maternityWeeks})`} htmlFor="mw">
+                <Field label="Sytuacja szczególna (przejęcie przed 14. tygodniem)" htmlFor="sto" hint="art. 180 § 16 KP">
+                  <select
+                    id="sto"
+                    className={selectCls}
+                    value={plan.specialTakeOver ?? ""}
+                    onChange={(e) => updPlan({ specialTakeOver: (e.target.value || undefined) as LeavePlan["specialTakeOver"] })}
+                  >
+                    <option value="">Brak – mama rezygnuje po {ent.obligatoryMotherWeeks} tygodniach</option>
+                    {SPECIAL_TAKEOVER.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              )}
+              {plan.fatherTakesOverFromWeek !== undefined && (
+                <Field
+                  label={`Mama wykorzystuje tygodni (min. ${SPECIAL_TAKEOVER.find((o) => o.value === plan.specialTakeOver)?.minWeeks ?? ent.obligatoryMotherWeeks}, maks. ${ent.maternityWeeks})`}
+                  htmlFor="mw"
+                >
                   <Input
                     id="mw"
                     type="number"
-                    min={ent.obligatoryMotherWeeks}
+                    min={SPECIAL_TAKEOVER.find((o) => o.value === plan.specialTakeOver)?.minWeeks ?? ent.obligatoryMotherWeeks}
                     max={ent.maternityWeeks}
                     value={plan.fatherTakesOverFromWeek}
                     onChange={(e) => updPlan({ fatherTakesOverFromWeek: Number(e.target.value) || 0 })}

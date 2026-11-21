@@ -18,11 +18,12 @@ export const LINKS = {
   birthCertificate: "https://www.gov.pl/web/gov/uzyskaj-odpis-aktu-urodzenia",
   parentalGov: "https://www.gov.pl/web/rodzina/urlop-rodzicielski",
   pip: "https://www.pip.gov.pl/dla-pracodawcow/porady-prawne/rodzicielstwo",
+  pregnancyLoss: "https://www.gov.pl/web/rodzina/latwiejszy-dostep-do-swiadczen-po-stracie-ciazy",
 } as const;
 
 const SRC = {
   kp180: "art. 180 KP",
-  kp1801: "art. 180¹ KP",
+  kp1802: "art. 180² KP",
   kp1821b: "art. 182¹ᵇ KP",
   kp1821e: "art. 182¹ᵉ KP",
   kp1823: "art. 182³ KP",
@@ -201,7 +202,7 @@ export function buildFilingGuide(ctx: FilingContext, params: Params): FilingStep
       deadlineRule: `Pracownik składa wniosek najpóźniej ${d.supplementaryApplicationDaysBeforeMaternityEnd} dni przed końcem urlopu macierzyńskiego.`,
       online: { channel: mTitle === "umowa_o_prace" ? "e-mail/system kadrowy" : "PUE/eZUS", howTo: mTitle === "umowa_o_prace" ? ["Złóż wniosek u pracodawcy."] : PUE_HOWTO },
       links: [{ label: "Zasiłek macierzyński (zus.pl)", url: LINKS.maternity }],
-      source: SRC.kp1801,
+      source: SRC.kp1802,
     });
   }
 
@@ -295,11 +296,16 @@ export function buildFilingGuide(ctx: FilingContext, params: Params): FilingStep
       who: "mama",
       where: mTitle === "umowa_o_prace" ? "pracodawca" : "ZUS",
       forms: [],
-      attachments: [scenario.stillbirth ? "Zaświadczenie o martwym urodzeniu / skrócony odpis aktu urodzenia z adnotacją" : "Skrócony odpis aktu zgonu dziecka"],
+      // Since 6.08.2025 a stillbirth certificate from a doctor or midwife is enough, regardless of the week of pregnancy (gov.pl).
+      attachments: [
+        scenario.stillbirth
+          ? "Zaświadczenie o martwym urodzeniu (lekarz lub położna, bez względu na tydzień ciąży) albo odpis aktu urodzenia z adnotacją o martwym urodzeniu"
+          : "Skrócony odpis aktu zgonu dziecka",
+      ],
       deadlineRule: "Przekaż niezwłocznie – od tego zależy długość urlopu macierzyńskiego. Pomoc i wsparcie: sekcja „Trudne sytuacje”.",
       online: { channel: "PUE/eZUS", howTo: ["Dokument możesz dołączyć jako skan do wiadomości na PUE/eZUS."] },
-      links: [],
-      source: `${SRC.kp180}; ${SRC.rozpDokumenty}`,
+      links: [{ label: "Świadczenia po stracie ciąży (gov.pl)", url: LINKS.pregnancyLoss }],
+      source: `art. 180¹ KP; ${SRC.rozpDokumenty}`,
     });
   }
 

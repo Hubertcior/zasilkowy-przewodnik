@@ -7,8 +7,10 @@ export const ENTITLEMENT_SOURCES = {
   maternity: "art. 180 § 1 KP",
   beforeBirth: "art. 180 § 2 KP",
   obligatory: "art. 180 § 3 KP (14 tygodni po porodzie wykorzystuje matka)",
-  childDeath: "art. 180 § 4–6 KP",
-  supplementary: "art. 180¹ KP",
+  // Verified: gov.pl „Łatwiejszy dostęp do świadczeń po stracie ciąży” (art. 180¹ § 1 KP).
+  childDeath: "art. 180¹ KP (martwe urodzenie, utrata ciąży, zgon dziecka)",
+  // Verified: § 14 rozporządzenia Dz.U. 2025 poz. 322 refers to art. 180² KP.
+  supplementary: "art. 180² KP",
   parental: "art. 182¹ᵃ KP",
   adoption: "art. 183 KP",
   paternity: "art. 182³ KP",
@@ -51,7 +53,7 @@ export function parentalWeeksFor(children: number, zaZyciem: boolean, p: Params)
 }
 
 /**
- * Supplementary maternity leave for premature / hospitalised newborns (art. 180¹ KP).
+ * Supplementary maternity leave for premature / hospitalised newborns (art. 180² KP).
  * One week per (started) week of hospitalisation, capped by category.
  */
 export function supplementaryWeeksFor(pm: Prematurity, p: Params): { weeks: number; note: string } {

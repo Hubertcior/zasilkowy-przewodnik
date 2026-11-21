@@ -13,7 +13,7 @@ export const WARNING_SOURCES = {
   voluntary: "art. 11 ust. 2 ustawy o systemie ubezpieczeń społecznych (dobrowolne ubezpieczenie chorobowe)",
   waiting: "art. 4 ustawy zasiłkowej",
   debt: "art. 14 ust. 2 pkt 2 ustawy o systemie ubezpieczeń społecznych (ustanie dobrowolnego ubezpieczenia przy nieopłaceniu składki w terminie)",
-  longApplication: "art. 31 ust. 3 ustawy zasiłkowej; art. 180¹ Kodeksu pracy",
+  longApplication: "art. 31 ust. 3 ustawy zasiłkowej; art. 182¹ᵈ Kodeksu pracy",
   nonTransferable: "art. 182¹ᵃ § 1 Kodeksu pracy",
   paternity: "art. 182³ Kodeksu pracy",
   kpProtection: "art. 177 § 1 i § 3 Kodeksu pracy",
@@ -196,8 +196,11 @@ export function collectWarnings(ctx: WarningContext, params: Params): Warning[] 
     add(debtWarning(parent.contributionDebt, p.sickness === "dobrowolne"));
   }
 
+  // Stillbirth / child death: no parental leave, so no 21-day application or father's 9 weeks (art. 180¹ KP).
+  const loss = scenario.kind === "urodzenie" && (!!scenario.stillbirth || (!!scenario.childDeath && scenario.children <= 1));
+
   // --- termin-21-dni ---------------------------------------------------------------------------
-  if (isBirth) {
+  if (isBirth && !loss) {
     const deadline = iso(addDays(parseISO(event), params.deadlines.longApplicationDaysAfterBirth));
     const daysLeft = differenceInCalendarDays(parseISO(deadline), parseISO(today));
     if (daysLeft >= 0) {
@@ -219,7 +222,7 @@ export function collectWarnings(ctx: WarningContext, params: Params): Warning[] 
   // --- niewykorzystane-9-tygodni --------------------------------------------------------------
   if (plan) {
     const fatherWeeks = plan.parental.filter((x) => x.parent === "ojciec").reduce((s, x) => s + x.weeks, 0);
-    if (father && fatherWeeks < params.nonTransferableWeeks) {
+    if (father && !loss && fatherWeeks < params.nonTransferableWeeks) {
       add({
         id: "niewykorzystane-9-tygodni",
         severity: "info",
@@ -247,7 +250,7 @@ export function collectWarnings(ctx: WarningContext, params: Params): Warning[] 
   }
 
   // --- ojcowski-12-miesiecy ------------------------------------------------------------------
-  if (father && scenario.kind !== "piecza") {
+  if (father && scenario.kind !== "piecza" && !(scenario.kind === "urodzenie" && scenario.stillbirth)) {
     const deadline = iso(addMonths(parseISO(event), scenario.kind === "adopcja" ? params.paternity.adoptionMonthsFromRuling : params.paternity.untilChildMonths));
     add({
       id: "ojcowski-12-miesiecy",

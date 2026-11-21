@@ -35,7 +35,13 @@ export interface CalculateResult {
 }
 
 /** Default plan: long application, mother takes parental minus the father's 9 weeks, father his 9 weeks (if present). */
-export function defaultPlan(entitlement: Entitlement, hasFather: boolean, params: Params): LeavePlan {
+export function defaultPlan(entitlement: Entitlement, hasFather: boolean, params: Params, scenario?: Scenario): LeavePlan {
+  // Stillbirth / pregnancy loss / child death: only the shortened maternity leave at 100%. After a stillbirth there is
+  // no child to raise, so no paternity leave either (art. 182³ KP – leave for a father raising the child).
+  if (entitlement.parentalWeeks === 0 && entitlement.childDeathRule) {
+    const stillbirth = scenario?.kind === "urodzenie" && !!scenario.stillbirth;
+    return { longApplication: false, parental: [], paternityWeeks: hasFather && !stillbirth ? (Math.min(params.paternity.weeks, 2) as 0 | 1 | 2) : 0 };
+  }
   const fatherWeeks = hasFather ? entitlement.nonTransferablePerParent : 0;
   const motherWeeks = entitlement.parentalWeeks - entitlement.nonTransferablePerParent;
   const parental: LeavePlan["parental"] = [];
@@ -90,7 +96,7 @@ export function calculateAll(req: CalculateRequest, params: Params): CalculateRe
   }
 
   const entitlement = calcEntitlement(scenario, params);
-  const plan = req.plan ?? defaultPlan(entitlement, !!sched.ojciec, params);
+  const plan = req.plan ?? defaultPlan(entitlement, !!sched.ojciec, params, scenario);
   const schedule = buildSchedule({ scenario, mother: sched.matka, father: sched.ojciec, plan }, entitlement, params);
   const warnings = collectWarnings(
     { parents, scenario, plan, eligibility: eligibility as Record<string, EligibilityResult>, today: req.today ?? today() },

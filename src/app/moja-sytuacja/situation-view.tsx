@@ -350,6 +350,17 @@ export function SituationView() {
                 .map((w) => (
                   <WarningCallout key={w.id + w.title} warning={w} />
                 ))}
+              <p className="text-muted-foreground text-sm">
+                Wątpliwości co do swoich praw w pracy? Porady prawne:{" "}
+                <a href="https://www.pip.gov.pl/dla-pracodawcow/porady-prawne/rodzicielstwo" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2">
+                  Państwowa Inspekcja Pracy
+                </a>
+                . Szczególne sytuacje:{" "}
+                <Link href="/trudne-sytuacje" className="text-primary underline underline-offset-2">
+                  Trudne sytuacje
+                </Link>
+                .
+              </p>
             </Section>
           )}
 

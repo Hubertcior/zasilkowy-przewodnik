@@ -12,11 +12,18 @@ import {
   Settings,
   UserRound,
   type LucideIcon,
+  Link2,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -28,23 +35,57 @@ interface NavItem {
 
 export const NAV: NavItem[] = [
   { href: "/", label: "Start", icon: Home },
-  { href: "/moja-sytuacja", label: "Moja sytuacja", short: "Sytuacja", icon: UserRound },
+  {
+    href: "/moja-sytuacja",
+    label: "Moja sytuacja",
+    short: "Sytuacja",
+    icon: UserRound,
+  },
   { href: "/kalkulator", label: "Kalkulator", icon: Calculator },
-  { href: "/co-i-gdzie", label: "Co i gdzie złożyć", short: "Dokumenty", icon: FileText },
+  {
+    href: "/co-i-gdzie",
+    label: "Co i gdzie złożyć",
+    short: "Dokumenty",
+    icon: FileText,
+  },
   { href: "/wnioski", label: "Wnioski", icon: Send },
-  { href: "/konto", label: "Moje konto (PUE – symulacja)", short: "Konto", icon: Landmark },
+  {
+    href: "/konto",
+    label: "Moje konto (PUE – symulacja)",
+    short: "Konto",
+    icon: Landmark,
+  },
   { href: "/trudne-sytuacje", label: "Trudne sytuacje", icon: HeartHandshake },
-  { href: "/sprawy", label: "Przykładowe sprawy", short: "Sprawy", icon: FolderOpen },
+  {
+    href: "/przydatne-linki",
+    label: "Przydatne linki",
+    short: "Linki",
+    icon: Link2,
+  },
+  {
+    href: "/sprawy",
+    label: "Przykładowe sprawy",
+    short: "Sprawy",
+    icon: FolderOpen,
+  },
 ];
 
 /** Items shown in the mobile bottom bar; the rest live in the "Więcej" sheet. */
 const MOBILE_MAIN = ["/", "/moja-sytuacja", "/kalkulator", "/co-i-gdzie"];
 
 function isActive(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+  return href === "/"
+    ? pathname === "/"
+    : pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () => void }) {
+function NavLinks({
+  pathname,
+  onNavigate,
+}: {
+  pathname: string;
+  onNavigate?: () => void;
+}) {
   return (
     <ul className="space-y-1">
       {NAV.map((item) => {
@@ -57,7 +98,9 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                active ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium" : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60",
+                active
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent/60",
               )}
             >
               <item.icon className="size-4 shrink-0" aria-hidden />
@@ -72,24 +115,39 @@ function NavLinks({ pathname, onNavigate }: { pathname: string; onNavigate?: () 
 
 function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-      <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg text-sm" aria-hidden>
+    <Link
+      href="/"
+      className="flex items-center gap-2 font-semibold tracking-tight"
+    >
+      <span
+        className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg text-sm"
+        aria-hidden
+      >
         ZP
       </span>
       <span className="leading-tight">
         Zasiłkowy Przewodnik
-        <span className="text-muted-foreground block text-xs font-normal">Przyszłego Rodzica</span>
+        <span className="text-muted-foreground block text-xs font-normal">
+          Przyszłego Rodzica
+        </span>
       </span>
     </Link>
   );
 }
 
 function Footer() {
-  const [params, setParams] = useState<{ version: string; effectiveFrom: string } | null>(null);
+  const [params, setParams] = useState<{
+    version: string;
+    effectiveFrom: string;
+  } | null>(null);
   useEffect(() => {
     fetch("/api/params")
       .then((r) => (r.ok ? r.json() : null))
-      .then((p) => p && setParams({ version: p.version, effectiveFrom: p.effectiveFrom }))
+      .then(
+        (p) =>
+          p &&
+          setParams({ version: p.version, effectiveFrom: p.effectiveFrom }),
+      )
       .catch(() => {});
   }, []);
   return (
@@ -103,11 +161,19 @@ function Footer() {
               Parametry: wersja {params.version} z dnia {params.effectiveFrom}.
             </>
           )}{" "}
-          <a href="https://www.zus.pl" target="_blank" rel="noopener noreferrer" className="hover:text-foreground underline underline-offset-2">
+          <a
+            href="https://www.zus.pl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground underline underline-offset-2"
+          >
             Źródła: zus.pl
           </a>
         </p>
-        <Link href="/admin" className="hover:text-foreground inline-flex items-center gap-1 underline-offset-2 hover:underline">
+        <Link
+          href="/admin"
+          className="hover:text-foreground inline-flex items-center gap-1 underline-offset-2 hover:underline"
+        >
           <Settings className="size-3" aria-hidden /> Panel administracyjny
         </Link>
       </div>
@@ -122,7 +188,10 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-dvh flex-col">
-      <a href="#main" className="bg-primary text-primary-foreground sr-only z-50 rounded-md px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2">
+      <a
+        href="#main"
+        className="bg-primary text-primary-foreground sr-only z-50 rounded-md px-3 py-2 focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
+      >
         Przejdź do treści
       </a>
 
@@ -144,9 +213,17 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
               <nav aria-label="Menu główne" className="px-2">
-                <NavLinks pathname={pathname} onNavigate={() => setOpen(false)} />
-                <Link href="/admin" onClick={() => setOpen(false)} className="text-muted-foreground mt-4 flex items-center gap-3 px-3 py-2 text-sm">
-                  <Settings className="size-4" aria-hidden /> Panel administracyjny
+                <NavLinks
+                  pathname={pathname}
+                  onNavigate={() => setOpen(false)}
+                />
+                <Link
+                  href="/admin"
+                  onClick={() => setOpen(false)}
+                  className="text-muted-foreground mt-4 flex items-center gap-3 px-3 py-2 text-sm"
+                >
+                  <Settings className="size-4" aria-hidden /> Panel
+                  administracyjny
                 </Link>
               </nav>
             </SheetContent>
@@ -180,7 +257,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={cn("flex h-16 flex-col items-center justify-center gap-1 text-[11px]", active ? "text-primary font-medium" : "text-muted-foreground")}
+                  className={cn(
+                    "flex h-16 flex-col items-center justify-center gap-1 text-[11px]",
+                    active
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground",
+                  )}
                 >
                   <item.icon className="size-5" aria-hidden />
                   {item.short ?? item.label}

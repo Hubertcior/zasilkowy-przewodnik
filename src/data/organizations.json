@@ -1,0 +1,110 @@
+{
+  "note": "Organizacje non-profit (fundacje) pomagające w sytuacjach szczególnych. Nazwa i KRS potwierdzone na oficjalnej stronie organizacji (pole krsSource); status OPP tylko tam, gdzie strona lub wykaz 1,5% to podaje (null = nie sprawdzono).",
+  "verifiedAt": "2026-11-21",
+  "organizations": [
+    {
+      "id": "hospicjum-tischnera",
+      "name": "Fundacja Krakowskie Hospicjum dla Dzieci im. ks. Józefa Tischnera",
+      "legalForm": "fundacja",
+      "krs": "0000203313",
+      "opp": true,
+      "url": "https://www.hospicjumtischnera.org/",
+      "krsSource": "https://www.hospicjumtischnera.org/",
+      "area": "cała Polska (hospicjum perinatalne), Kraków i okolice (hospicjum domowe)",
+      "description": "Opieka perinatalna od poczęcia, hospicjum domowe dla dzieci i pomoc po stracie dziecka – wsparcie w żałobie i pomoc psychologiczna dla rodziny.",
+      "situations": ["strata", "ciezko-chore"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "warszawskie-hospicjum-dla-dzieci",
+      "name": "Fundacja Warszawskie Hospicjum dla Dzieci",
+      "legalForm": "fundacja",
+      "krs": "0000097123",
+      "opp": null,
+      "url": "https://www.hospicjum.waw.pl/",
+      "krsSource": "https://www.hospicjum.waw.pl/",
+      "area": "Warszawa i okolice",
+      "description": "Hospicjum perinatalne dla rodziców spodziewających się dziecka z ciężką wadą – opieka w ciąży i po porodzie. Grupy wsparcia w żałobie dla rodziców i rodzeństwa, także po śmierci dziecka przed narodzinami.",
+      "situations": ["strata", "ciezko-chore"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "fundacja-ernesta",
+      "name": "Fundacja Medycyny Prenatalnej im. Ernesta Wójcickiego",
+      "legalForm": "fundacja",
+      "krs": "0000789473",
+      "opp": true,
+      "url": "https://fundacjaernesta.pl/",
+      "krsSource": "https://fundacjaernesta.pl/",
+      "area": "cała Polska",
+      "description": "Bezpłatna pomoc psychologiczna i prawna dla kobiet po poronieniu, martwym urodzeniu i w innych kryzysach okołoporodowych, w tym porady o uprawnieniach. Wspiera też rodziców wcześniaków.",
+      "situations": ["strata", "wczesniak"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "nagle-sami",
+      "name": "Fundacja Nagle Sami",
+      "legalForm": "fundacja",
+      "krs": "0000398530",
+      "opp": null,
+      "url": "https://naglesami.org.pl/",
+      "krsSource": "https://naglesami.org.pl/",
+      "area": "cała Polska (telefon i online), grupy wsparcia",
+      "description": "Wsparcie dla osób w żałobie i kryzysie: bezpłatny telefon 800 108 108 (pon.–pt. 14:00–20:00), grupy i konsultacje psychologiczne, poradnik dla osób po stracie.",
+      "situations": ["strata", "matka"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "wczesniak-rodzice-rodzicom",
+      "name": "Fundacja Wcześniak Rodzice-Rodzicom",
+      "legalForm": "fundacja",
+      "krs": "0000191989",
+      "opp": null,
+      "url": "https://wczesniak.pl/",
+      "krsSource": "https://wczesniak.pl/",
+      "area": "cała Polska",
+      "description": "Bezpłatny „Niezbędnik rodzica wcześniaka”, wypożyczalnia sprzętu, grupy wsparcia i program „Mentor” łączący doświadczonych rodziców wcześniaków z nowymi.",
+      "situations": ["wczesniak"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "dzieciom-zdazyc-z-pomoca",
+      "name": "Fundacja Dzieciom „Zdążyć z Pomocą”",
+      "legalForm": "fundacja",
+      "krs": "0000037904",
+      "opp": true,
+      "url": "https://www.dzieciom.pl/",
+      "krsSource": "https://www.dzieciom.pl/",
+      "area": "cała Polska",
+      "description": "Pomoc dzieciom z niepełnosprawnością i chorobami przewlekłymi: subkonta na leczenie i rehabilitację, ośrodki rehabilitacyjne, grupa wsparcia psychoterapeutycznego dla rodziców.",
+      "situations": ["ciezko-chore"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "gajusz",
+      "name": "Fundacja Gajusz",
+      "legalForm": "fundacja",
+      "krs": "0000109866",
+      "opp": null,
+      "url": "https://gajusz.org.pl/",
+      "krsSource": "https://gajusz.org.pl/",
+      "area": "Łódź i województwo łódzkie",
+      "description": "Pomoc dzieciom nieuleczalnie i przewlekle chorym oraz porzuconym; prowadzi hospicja dla dzieci.",
+      "situations": ["ciezko-chore"],
+      "verifiedAt": "2026-11-21"
+    },
+    {
+      "id": "fundacja-hospicyjna",
+      "name": "Fundacja Hospicyjna",
+      "legalForm": "fundacja",
+      "krs": "0000201002",
+      "opp": null,
+      "url": "https://www.fundacjahospicyjna.pl/",
+      "krsSource": "https://www.fundacjahospicyjna.pl/",
+      "area": "Gdańsk (hospicjum, opieka wytchnieniowa); cała Polska (fundusz dla dzieci osieroconych)",
+      "description": "Prowadzi hospicjum dla dorosłych i dzieci, centrum opieki wytchnieniowej dla opiekunów rodzinnych oraz fundusz „Tumbo Pomaga” dla dzieci w żałobie po śmierci rodzica.",
+      "situations": ["matka", "ciezko-chore"],
+      "verifiedAt": "2026-11-21"
+    }
+  ]
+}
