@@ -138,6 +138,20 @@ export const ParamsSchema = z.object({
   deadlines: z.object({
     longApplicationDaysAfterBirth: positiveInt,
     maternityStartWeeksBeforeDue: positiveInt,
+    /** Application for parental leave at least N days before it starts (art. 182^1b KP). */
+    parentalApplicationDaysBefore: positiveInt,
+    /** Application for supplementary leave at least N days before maternity leave ends (art. 180^1 KP). */
+    supplementaryApplicationDaysBeforeMaternityEnd: positiveInt,
+    /** Application for paternity leave at least N days before it starts (art. 182^3 KP). */
+    paternityApplicationDaysBefore: positiveInt,
+    /** Application to combine parental leave with work at least N days before starting work (art. 182^1e KP). */
+    combineWorkApplicationDaysBefore: positiveInt,
+    /** Resignation from part of maternity leave (after 14 weeks) at least N days before returning to work (art. 180 § 6 KP). */
+    maternityResignationDaysBefore: positiveInt,
+    /** Birth registration in the civil registry office within N days (Prawo o aktach stanu cywilnego). */
+    birthRegistrationDays: positiveInt,
+    /** Benefit applications may be filed electronically (equivalent to paper) from this date. */
+    electronicApplicationsFrom: isoDate,
   }),
 
   /** Thresholds for risk warnings (KAN-19). Heuristics, not legal limits. */

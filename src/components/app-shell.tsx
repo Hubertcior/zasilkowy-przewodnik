@@ -30,7 +30,7 @@ export const NAV: NavItem[] = [
   { href: "/", label: "Start", icon: Home },
   { href: "/moja-sytuacja", label: "Moja sytuacja", short: "Sytuacja", icon: UserRound },
   { href: "/kalkulator", label: "Kalkulator", icon: Calculator },
-  { href: "/dokumenty", label: "Co i gdzie złożyć", short: "Dokumenty", icon: FileText },
+  { href: "/co-i-gdzie", label: "Co i gdzie złożyć", short: "Dokumenty", icon: FileText },
   { href: "/wnioski", label: "Wnioski", icon: Send },
   { href: "/konto", label: "Moje konto (PUE – symulacja)", short: "Konto", icon: Landmark },
   { href: "/trudne-sytuacje", label: "Trudne sytuacje", icon: HeartHandshake },
@@ -38,7 +38,7 @@ export const NAV: NavItem[] = [
 ];
 
 /** Items shown in the mobile bottom bar; the rest live in the "Więcej" sheet. */
-const MOBILE_MAIN = ["/", "/moja-sytuacja", "/kalkulator", "/dokumenty"];
+const MOBILE_MAIN = ["/", "/moja-sytuacja", "/kalkulator", "/co-i-gdzie"];
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);

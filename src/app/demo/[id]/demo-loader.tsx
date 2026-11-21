@@ -18,7 +18,10 @@ export function DemoLoader({ id }: { id: string }) {
       if (!res.ok) throw new Error();
       const data = (await res.json()) as { persona: { id: string; name: string }; parents: ParentData[]; scenario: Scenario };
       setFromPersona({ personaId: data.persona.id, displayName: data.persona.name, parents: data.parents, scenario: data.scenario });
-      router.replace("/moja-sytuacja");
+      // Optional target: /demo/anna?do=kalkulator (whitelisted pages only).
+      const target = new URLSearchParams(window.location.search).get("do");
+      const allowed = ["moja-sytuacja", "kalkulator", "co-i-gdzie", "wnioski", "konto"];
+      router.replace(`/${target && allowed.includes(target) ? target : "moja-sytuacja"}`);
     })().catch(() => setError(true));
   }, [id, router, setFromPersona]);
 

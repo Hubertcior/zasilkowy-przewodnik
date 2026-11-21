@@ -362,7 +362,7 @@ export function SituationView() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link href="/dokumenty">
+              <Link href="/co-i-gdzie">
                 <FileText className="size-4" aria-hidden /> Co i gdzie złożyć
               </Link>
             </Button>

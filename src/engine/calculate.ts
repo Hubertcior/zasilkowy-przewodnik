@@ -1,6 +1,7 @@
 import { calcBase, type BaseResult } from "./base";
 import { checkEligibility, scenarioDate, type EligibilityResult } from "./eligibility";
 import { calcEntitlement, type Entitlement } from "./entitlement";
+import { buildFilingGuide, type FilingStep } from "./filing";
 import { round2 } from "./money";
 import type { Params } from "./params";
 import { calcPregnancy, type PregnancyResult } from "./pregnancy";
@@ -29,6 +30,8 @@ export interface CalculateResult {
   plan: LeavePlan;
   schedule: ScheduleResult;
   warnings: Warning[];
+  /** "Co i gdzie złożyć" steps (KAN-27). */
+  filing: FilingStep[];
 }
 
 /** Default plan: long application, mother takes parental minus the father's 9 weeks, father his 9 weeks (if present). */
@@ -93,7 +96,8 @@ export function calculateAll(req: CalculateRequest, params: Params): CalculateRe
     { parents, scenario, plan, eligibility: eligibility as Record<string, EligibilityResult>, today: req.today ?? today() },
     params,
   );
-  return { bases, rateVariants, eligibility, entitlement, plan, schedule, warnings };
+  const filing = buildFilingGuide({ parents, scenario, eligibility, entitlement, schedule, plan }, params);
+  return { bases, rateVariants, eligibility, entitlement, plan, schedule, warnings, filing };
 }
 
 export interface PregnancyCalcResult extends PregnancyResult {

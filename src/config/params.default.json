@@ -85,7 +85,14 @@
   "payerThresholdInsured": 20,
   "deadlines": {
     "longApplicationDaysAfterBirth": 21,
-    "maternityStartWeeksBeforeDue": 6
+    "maternityStartWeeksBeforeDue": 6,
+    "parentalApplicationDaysBefore": 21,
+    "supplementaryApplicationDaysBeforeMaternityEnd": 21,
+    "paternityApplicationDaysBefore": 7,
+    "combineWorkApplicationDaysBefore": 21,
+    "maternityResignationDaysBefore": 7,
+    "birthRegistrationDays": 21,
+    "electronicApplicationsFrom": "2026-07-01"
   },
   "warnings": {
     "pregnancyWeeks": 40,
