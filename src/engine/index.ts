@@ -5,4 +5,5 @@ export * from "./base";
 export * from "./eligibility";
 export * from "./entitlement";
 export * from "./schedule";
+export * from "./pregnancy";
 export * from "./params";

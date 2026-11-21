@@ -117,6 +117,19 @@ export const ParamsSchema = z.object({
     waitingDays: z.object({ obowiazkowe: nonNegativeInt, dobrowolne: nonNegativeInt }),
     /** Earlier insurance periods count towards the waiting period if the break was at most this many days (art. 4 ust. 2 u.z.). */
     waitingMaxGapDays: nonNegativeInt,
+    /** Sickness benefit after insurance ends if incapacity arose within this many days (art. 7 u.z.). */
+    afterInsuranceIllnessWithinDays: nonNegativeInt,
+    /** Incapacity periods are summed into one benefit period if the break is at most this many days (art. 9 ust. 2 u.z.). */
+    periodsMergeMaxGapDays: nonNegativeInt,
+  }),
+
+  /** Rehabilitation benefit after the benefit period is exhausted (art. 18–19 u.z.). Info only. */
+  rehabilitation: z.object({
+    firstMonthsRate: rate,
+    firstMonths: positiveInt,
+    laterRate: rate,
+    pregnancyRate: rate,
+    maxMonths: positiveInt,
   }),
 
   /** Payer reporting more than this many insured (as of 30 Nov of previous year) pays benefits itself. Art. 61 ustawy zasiłkowej. */

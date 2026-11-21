@@ -71,7 +71,16 @@
     "employerPaidDays": { "under50": 33, "from50": 14 },
     "maxBenefitDays": 270,
     "waitingDays": { "obowiazkowe": 30, "dobrowolne": 90 },
-    "waitingMaxGapDays": 30
+    "waitingMaxGapDays": 30,
+    "afterInsuranceIllnessWithinDays": 14,
+    "periodsMergeMaxGapDays": 60
+  },
+  "rehabilitation": {
+    "firstMonthsRate": 0.9,
+    "firstMonths": 3,
+    "laterRate": 0.75,
+    "pregnancyRate": 1.0,
+    "maxMonths": 12
   },
   "payerThresholdInsured": 20,
   "deadlines": {
