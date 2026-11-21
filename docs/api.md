@@ -28,9 +28,10 @@ Wszystkie obliczenia pobierają aktualne parametry z `getParamsStore()` (panel a
 | GET | `/api/params/history` | historia zmian parametrów |
 | POST | `/api/mock/mobywatel/login` | SYMULACJA logowania mObywatel (KAN-21) |
 | GET | `/api/mock/zus/profile` | SYMULACJA danych z ZUS (KAN-21) |
-| GET | `/api/mock/zus/ezla` | SYMULACJA podglądu e-ZLA (KAN-29) |
-| GET | `/api/mock/zus/zadluzenie` | SYMULACJA zaświadczenia o zadłużeniu (KAN-29) |
-| POST | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS” (KAN-29) |
+| GET | `/api/mock/zus/ezla` | SYMULACJA podglądu e-ZLA: `{ ezla: [{ series, from, to, code, doctor, status, recipient }] }` (KAN-29) |
+| GET | `/api/mock/zus/zadluzenie?date=` | SYMULACJA zadłużenia składkowego na dzień: `{ date, asOf, amount, details[] }` (KAN-29) |
+| GET | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: lista wątków `{ threads[] }` (KAN-29) |
+| POST | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: `{ category: macierzynski\|chorobowy\|dokumenty, subject?, question }` → 201 `{ thread }`; odpowiedź szablonowa po ok. 3 s (KAN-29) |
 | POST | `/api/mock/wnioski` | SYMULACJA wysyłki wniosków (KAN-30) |
 
 Schematy wejścia: `src/engine/schemas.ts` (zod, zgodne z `src/engine/types.ts`).

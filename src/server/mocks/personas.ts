@@ -15,6 +15,19 @@ export interface Ezla {
   doctor: string;
   issuedAt: string;
   status: "przyjete" | "anulowane";
+  /** Who received the certificate from ZUS (employer > 20 insured, otherwise ZUS pays itself). */
+  recipient: string;
+}
+
+export interface DebtDetail {
+  label: string;
+  amount: number;
+}
+
+export interface DebtEntry {
+  date: string;
+  amount: number;
+  details?: DebtDetail[];
 }
 
 export interface Persona {
@@ -28,7 +41,7 @@ export interface Persona {
   scenario: Scenario;
   ezla: Ezla[];
   /** Contribution debt (PLN) as of a given date; the mock returns the latest entry not after the asked date. */
-  debt: { date: string; amount: number }[];
+  debt: DebtEntry[];
 }
 
 export interface PersonaSummary {
@@ -84,8 +97,8 @@ export function buildPersonas(todayIso: string = iso(new Date())): Persona[] {
       ],
       scenario: { kind: "ciaza", dueDate: m(3) },
       ezla: [
-        { id: "ezla-anna-1", series: "ZL 1234567", from: d(-75), to: d(-70), code: "B", diagnosisHint: "ciąża – nudności", doctor: "lek. Jan Nowak (fikcyjny)", issuedAt: d(-75), status: "przyjete" },
-        { id: "ezla-anna-2", series: "ZL 1234890", from: d(-30), to: d(-24), code: "B", diagnosisHint: "ciąża – zalecenie odpoczynku", doctor: "lek. Jan Nowak (fikcyjny)", issuedAt: d(-30), status: "przyjete" },
+        { id: "ezla-anna-1", series: "ZL 1234567", from: d(-75), to: d(-70), code: "B", diagnosisHint: "ciąża – nudności", doctor: "lek. Jan Nowak (fikcyjny)", issuedAt: d(-75), status: "przyjete", recipient: "Nordlog Sp. z o.o. (płatnik)" },
+        { id: "ezla-anna-2", series: "ZL 1234890", from: d(-30), to: d(-24), code: "B", diagnosisHint: "ciąża – zalecenie odpoczynku", doctor: "lek. Jan Nowak (fikcyjny)", issuedAt: d(-30), status: "przyjete", recipient: "Nordlog Sp. z o.o. (płatnik)" },
       ],
       debt: [{ date: "2000-01-01", amount: 0 }],
     },
@@ -114,7 +127,12 @@ export function buildPersonas(todayIso: string = iso(new Date())): Persona[] {
       ],
       scenario: { kind: "urodzenie", birthDate: d(-10), children: 1, zaZyciem: false },
       ezla: [],
-      debt: [{ date: "2000-01-01", amount: 0 }],
+      // A small arrear 4 months ago, paid off a month later – shows that the debt is checked as of a given day.
+      debt: [
+        { date: "2000-01-01", amount: 0 },
+        { date: d(-120), amount: 412.36, details: [{ label: "Ubezpieczenia społeczne (w tym chorobowe)", amount: 412.36 }] },
+        { date: d(-90), amount: 0 },
+      ],
     },
     {
       id: "ola",
@@ -129,12 +147,22 @@ export function buildPersonas(todayIso: string = iso(new Date())): Persona[] {
           periods: [{ title: "dzialalnosc", sickness: "brak", from: "2022-05-01" }],
           incomes: [],
           declaredBase: declared(t, 4500),
-          contributionDebt: 0,
+          contributionDebt: 1250.4,
         },
       ],
       scenario: { kind: "ciaza", dueDate: m(4) },
       ezla: [],
-      debt: [{ date: "2000-01-01", amount: 0 }],
+      debt: [
+        { date: "2000-01-01", amount: 0 },
+        {
+          date: d(-45),
+          amount: 1250.4,
+          details: [
+            { label: "Ubezpieczenia społeczne", amount: 431.4 },
+            { label: "Ubezpieczenie zdrowotne", amount: 819.0 },
+          ],
+        },
+      ],
     },
     {
       id: "marta",
@@ -158,7 +186,7 @@ export function buildPersonas(todayIso: string = iso(new Date())): Persona[] {
         prematurity: { gestationWeek: 30, birthWeightG: 1400, hospitalWeeks: 5 },
       },
       ezla: [
-        { id: "ezla-marta-1", series: "ZL 2233445", from: d(-60), to: d(-21), code: "B", diagnosisHint: "ciąża zagrożona", doctor: "lek. Ewa Duda (fikcyjna)", issuedAt: d(-60), status: "przyjete" },
+        { id: "ezla-marta-1", series: "ZL 2233445", from: d(-60), to: d(-21), code: "B", diagnosisHint: "ciąża zagrożona", doctor: "lek. Ewa Duda (fikcyjna)", issuedAt: d(-60), status: "przyjete", recipient: "ZUS (płatnik zgłasza do 20 osób)" },
       ],
       debt: [{ date: "2000-01-01", amount: 0 }],
     },
@@ -208,7 +236,12 @@ export function personaSummaries(today?: string): PersonaSummary[] {
   return buildPersonas(today).map(({ id, name, summary, tags }) => ({ id, name, summary, tags }));
 }
 
-export function debtOn(persona: Persona, date: string): number {
+/** Latest debt entry not after `date` (the debt balance as of that day). */
+export function debtEntryOn(persona: Persona, date: string): DebtEntry {
   const entries = persona.debt.filter((x) => x.date <= date).sort((a, b) => b.date.localeCompare(a.date));
-  return entries[0]?.amount ?? 0;
+  return entries[0] ?? { date, amount: 0 };
+}
+
+export function debtOn(persona: Persona, date: string): number {
+  return debtEntryOn(persona, date).amount;
 }

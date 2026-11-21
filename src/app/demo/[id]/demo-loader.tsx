@@ -19,9 +19,13 @@ export function DemoLoader({ id }: { id: string }) {
       const data = (await res.json()) as { persona: { id: string; name: string }; parents: ParentData[]; scenario: Scenario };
       setFromPersona({ personaId: data.persona.id, displayName: data.persona.name, parents: data.parents, scenario: data.scenario });
       // Optional target: /demo/anna?do=kalkulator (whitelisted pages only).
-      const target = new URLSearchParams(window.location.search).get("do");
+      const qs = new URLSearchParams(window.location.search);
+      const target = qs.get("do");
       const allowed = ["moja-sytuacja", "kalkulator", "co-i-gdzie", "wnioski", "konto"];
-      router.replace(`/${target && allowed.includes(target) ? target : "moja-sytuacja"}`);
+      // Optional tab for /konto: /demo/anna?do=konto&tab=ezla
+      const tab = qs.get("tab");
+      const suffix = tab && /^[a-z-]{1,20}$/.test(tab) ? `?tab=${tab}` : "";
+      router.replace(`/${target && allowed.includes(target) ? target : "moja-sytuacja"}${suffix}`);
     })().catch(() => setError(true));
   }, [id, router, setFromPersona]);
 

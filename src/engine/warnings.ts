@@ -21,6 +21,26 @@ export const WARNING_SOURCES = {
   employmentChange: "art. 36–38 ustawy zasiłkowej (podstawa z 12 miesięcy)",
 } as const;
 
+/**
+ * Contribution debt warning (also used by the simulated PUE debt certificate, KAN-29).
+ * Source: art. 14 ust. 2 pkt 2 ustawy o systemie ubezpieczeń społecznych.
+ */
+export function debtWarning(amount: number, voluntarySickness: boolean): Warning {
+  return {
+    id: "zadluzenie-skladkowe",
+    severity: voluntarySickness ? "critical" : "warning",
+    title: "Zadłużenie składkowe",
+    text:
+      `Masz zadłużenie w ZUS: ${formatPLN(amount)}. Zasiłek nie zostanie wypłacony, dopóki zadłużenie istniejące na dzień ` +
+      "powstania prawa nie zostanie spłacone. " +
+      (voluntarySickness
+        ? "Uwaga: nieopłacenie w terminie składki na dobrowolne ubezpieczenie chorobowe może oznaczać ustanie tego ubezpieczenia – a wtedy utratę prawa do zasiłku. "
+        : "") +
+      "Sprawdź stan konta na PUE/eZUS i ureguluj zaległość przed porodem.",
+    source: WARNING_SOURCES.debt,
+  };
+}
+
 export interface WarningContext {
   parents: ParentData[];
   scenario: Scenario;
@@ -173,20 +193,7 @@ export function collectWarnings(ctx: WarningContext, params: Params): Warning[] 
   for (const parent of parents) {
     const p = pickActivePeriod(parent.periods, today) ?? pickActivePeriod(parent.periods, event);
     if (!parent.contributionDebt || parent.contributionDebt <= 0 || p?.title !== "dzialalnosc") continue;
-    const voluntary = p.sickness === "dobrowolne";
-    add({
-      id: "zadluzenie-skladkowe",
-      severity: voluntary ? "critical" : "warning",
-      title: "Zadłużenie składkowe",
-      text:
-        `Masz zadłużenie w ZUS: ${formatPLN(parent.contributionDebt)}. Zasiłek nie zostanie wypłacony, dopóki zadłużenie istniejące na dzień ` +
-        "powstania prawa nie zostanie spłacone. " +
-        (voluntary
-          ? "Uwaga: nieopłacenie w terminie składki na dobrowolne ubezpieczenie chorobowe może oznaczać ustanie tego ubezpieczenia – a wtedy utratę prawa do zasiłku. "
-          : "") +
-        "Sprawdź stan konta na PUE/eZUS i ureguluj zaległość przed porodem.",
-      source: WARNING_SOURCES.debt,
-    });
+    add(debtWarning(parent.contributionDebt, p.sickness === "dobrowolne"));
   }
 
   // --- termin-21-dni ---------------------------------------------------------------------------

@@ -31,6 +31,7 @@ Dziennik dla osoby (lub agenta), która przejmuje projekt. Aktualizowany po każ
 | KAN-26 | 1c324d9 | Kalkulator `/kalkulator`: panel opcji (sytuacja, podstawy z ręczną korektą, plan: 81,5%, przejęcie macierzyńskiego, do 5 części rodzicielskiego z pracą 0/¼/½ etatu, ojcowski), debounce → `/api/calculate`, podsumowanie, walidacja, oś czasu (Gantt), wykres Recharts, tabela okresów, porównanie wariantów, ostrzeżenia, druk, „Użyj planu we wniosku”, wersja parametrów | Tryb bez danych: syntetyczni rodzice + własna podstawa. Scenariusz „ciąża” liczony jako poród w terminie. Wybór „kto bierze uzupełniający” – zawsze rodzic kończący macierzyński (silnik). |
 | KAN-27 | 73b552c | `buildFilingGuide()` (src/engine/filing.ts) – kroki: L4 w ciąży, macierzyński przed porodem, wniosek o cały urlop (21 dni), Z-3/Z-3a, uzupełniający, rodzicielski (części, praca), przejęcie przez ojca, ojcowski, adopcja/piecza, zgon/martwe urodzenie, akt urodzenia; `filing` w `/api/calculate`; UI `/co-i-gdzie` (oś terminów, karty, checklisty załączników, „Złóż online”, linki zus.pl/gov.pl sprawdzone curl), `/dokumenty` → redirect; demo `?do=` | Nowe parametry terminów w `params.deadlines`. Terminy wniosków o urlopy (21/7 dni) i art. KP do weryfikacji z rozporządzeniem Dz.U. 2025 poz. 322. Linki do konkretnych formularzy – ogólna strona wzorów (konkretne adresy PDF niesprawdzone). |
 | KAN-28 | 0486a13 | Panel `/admin`: logowanie (`/api/admin/login`, cookie HMAC, `src/proxy.ts` chroni `/admin/*`), edytor generowany ze struktury params w 7 zakładkach z polskimi etykietami, walidacja zod klient+serwer, zapis z opisem zmiany i auto-wersją, historia z różnicami, reset, eksport/import JSON, podgląd wpływu (7000 zł), info o braku trwałości bez Upstash | Hasło demo `demo-zus` gdy brak `ADMIN_PASSWORD` (zmiana względem KAN-13). Formularze edytowane jako JSON. Tryb „file” lokalnie trwały, na Vercelu bez Upstash – pamięć. |
+| KAN-29 | __SHA__ | Symulacja PUE/eZUS `/konto` (zakładki: Moje dane, e-ZLA z objaśnieniem kodu B i „Przelicz chorobowy w ciąży”, zaświadczenie o zadłużeniu na dzień z podglądem do druku i znakiem wodnym, „Zapytaj ZUS”), mock `GET/POST /api/mock/pue/wiadomosc` (pamięć serwera, odpowiedź szablonowa po 3 s), `zadluzenie` zwraca `asOf` i `details`, `debtWarning()` wydzielone z `collectWarnings`, deep link `?tab=` (też `/demo/<persona>?do=konto&tab=ezla`) | Ola ma teraz zadłużenie 1250,40 zł, Kasia miała spłaconą zaległość 4 mies. temu. Przeliczenie e-ZLA: każde zwolnienie osobno, limit dni pracodawcy liczony tylko ze zwolnień z listy. Wątki PUE na Vercelu bez trwałości (per instancja). |
 
 ## Do zrobienia (stan na 2026-11-21)
 
@@ -38,7 +39,6 @@ Zadania w Jirze, w kolejności (Rank):
 
 | Zadanie | Temat | Wskazówki |
 |---------|-------|-----------|
-| KAN-29 | Symulacje PUE/eZUS: dane konta, e-ZLA, zaświadczenie o zadłużeniu, „Zapytaj ZUS” | Mocki `src/app/api/mock/zus/ezla`, `zadluzenie` już działają (KAN-21); `pue/wiadomosc` zwraca 501. Strona `/konto` to zaślepka. Persony mają `ezla` i `debt`. |
 | KAN-30 | Kreator wniosków (urlopy + ZAM, prefill z kalkulatora), odpis aktu urodzenia, symulowana wysyłka | Plan z kalkulatora jest w store (`updatePlan`). Mock `wnioski` zwraca 501. Strona `/wnioski` to zaślepka. Kroki i formularze: `calc.filing` (KAN-27). |
 | KAN-31 | Trudne sytuacje + organizacje charytatywne + przekierowania | Strona `/trudne-sytuacje` to zaślepka. Tylko organizacje wyłącznie charytatywne. |
 | KAN-32 | Testy końcowe: runner spraw, E2E Playwright, RWD | `npm run cases` działa. Playwright niezainstalowany. Do zrzutów używano `google-chrome --headless`. `/demo/<persona>?do=<strona>` ładuje dane bez klikania. |
@@ -55,6 +55,7 @@ Zadania w Jirze, w kolejności (Rank):
 - **Prywatne sprawy** czytane z `turbopackIgnore`, żeby nie trafiały do builda.
 - **Store** (`src/store/useCaseStore.ts`) w sessionStorage; trzy źródła: `mobywatel` / `reczne` / `sprawa`.
 - **Numery artykułów** ustaw (stałe `*_SOURCES` w `src/engine/*.ts`) wpisane z pamięci – do weryfikacji z tekstem ustawy i KP.
+- **Zrzuty headless Chrome** wymagają `--password-store=basic` (inaczej Chrome wisi na keyringu) i uruchomienia poza sandboksem.
 - **Hasło panelu admina** bez `ADMIN_PASSWORD`: `demo-zus`.
 - **Deploy na Vercel** jeszcze nie zrobiony (instrukcja w README).
 - Node przez nvm: `export NVM_DIR="$HOME/.nvm"; . "$NVM_DIR/nvm.sh"` przed `npm`.
