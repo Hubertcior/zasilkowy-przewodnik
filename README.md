@@ -11,7 +11,7 @@ Aplikacja webowa (RWD) na HackNation 2026, zadanie ZUS. Indywidualnie ustala upr
 | 🎬 Film (≤ 3 min) | _wkrótce_ – po publikacji także na stronie `/o-projekcie`; skrypt: [docs/film-skrypt.md](docs/film-skrypt.md) |
 | 📊 Prezentacja | [docs/prezentacja.html](docs/prezentacja.html) (10 slajdów), notatki: [docs/pitch-notatki.md](docs/pitch-notatki.md) |
 | 🔌 REST API | [docs/api.md](docs/api.md) |
-| 🤖 AI | aplikacja **nie używa AI w działaniu** (wyliczenia są regułowe); AI (Claude) wspierało tworzenie kodu – szczegóły w opisie, rozdz. 6 |
+| 🤖 AI | wyliczenia są regułowe; AI (Claude) tylko **odczytuje wgrane PDF** do formularza, który użytkownik zatwierdza (`/sprawy`, wymaga `ANTHROPIC_API_KEY`); szczegóły w opisie, rozdz. 6 |
 
 ![Kalkulator](docs/screens/04-kalkulator-desktop.jpg)
 

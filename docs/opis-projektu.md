@@ -157,22 +157,21 @@ Dodaj `?do=kalkulator`, `?do=co-i-gdzie`, `?do=wnioski` albo `?do=konto`, żeby 
 
 **Panel admina:** `/admin`, hasło `demo-zus`. Zmień np. stawkę „Wniosek o cały urlop” na 0,9 i zapisz – kalkulator od razu liczy według nowej wartości. „Domyślne” przywraca parametry.
 
-**Testy automatyczne:** `npm test` (173 testy jednostkowe), `npm run cases` (10 spraw), `npm run e2e` (27 testów E2E na desktopie i iPhonie 13, w tym przejście ścieżki z filmu).
+**Testy automatyczne:** `npm test` (183 testy jednostkowe), `npm run cases` (10 spraw), `npm run e2e` (31 testów E2E na desktopie i iPhonie 13, w tym przejście ścieżki z filmu i odczyt PDF z atrapą modelu).
 
 ## 6. Sztuczna inteligencja
 
 ### AI w działaniu aplikacji
 
-**Obecna wersja nie używa AI w działaniu aplikacji.** Wszystkie wyliczenia, ostrzeżenia, rekomendacje wniosków i odpowiedzi w symulacji „Zapytaj ZUS” pochodzą z deterministycznych reguł opisanych w kodzie i parametrach – z podaną podstawą prawną. To świadomy wybór: wynik, który ma porównywać się z decyzją ZUS, musi być powtarzalny i sprawdzalny.
+Wszystkie **wyliczenia**, ostrzeżenia, rekomendacje wniosków i odpowiedzi w symulacji „Zapytaj ZUS” pochodzą z deterministycznych reguł opisanych w kodzie i parametrach – z podaną podstawą prawną. To świadomy wybór: wynik, który ma porównywać się z decyzją ZUS, musi być powtarzalny i sprawdzalny.
 
-Zaplanowane (zadania P2, jeszcze nie zrobione):
+AI jest użyte w jednej funkcji, oznaczonej w UI plakietką **„AI”**:
 
-| Funkcja | Zakres | Ograniczenia |
-|---------|--------|--------------|
-| Odczyt wgranego PDF (ZAM, Z-3, Z-3a, zaświadczenia) – KAN-36 | model językowy wyciąga dane do formularza sprawy, użytkownik je zatwierdza przed wyliczeniem | wynik zawsze do weryfikacji; obliczenia nadal liczy silnik regułowy |
-| Asystent „Zapytaj o zasiłki” – KAN-37 | odpowiedzi na pytania w oparciu o parametry, silnik i sytuację użytkownika | nie podejmuje decyzji, nie zastępuje ZUS |
+| Funkcja | Gdzie | Model | Co robi | Ograniczenia i weryfikacja |
+|---------|-------|-------|---------|----------------------------|
+| **Odczyt wgranych PDF** (ZAM, Z-3, Z-3a, zaświadczenia) – KAN-36 | `/sprawy` → „Wgraj PDF” (AI), `POST /api/cases/extract` | Claude Opus 5.5 (`claude-opus-5-5`, Anthropic; zmiana przez `ANTHROPIC_MODEL`) | Pliki trafiają do modelu jako dokumenty PDF. Model wypełnia schemat danych sprawy (tytuł ubezpieczenia, płatnik, liczba ubezpieczonych, wynagrodzenia z 12 miesięcy, data porodu/przyjęcia, liczba dzieci, „Za życiem”, wcześniak, wariant 81,5%). Przy każdym polu zwraca pewność i dosłowny cytat z dokumentu. | Model ma nie zgadywać – brakujące pola zostają puste. Odpowiedź jest walidowana schematem (structured outputs + zod, jedna ponowna próba). **Użytkownik zawsze sprawdza i zatwierdza dane** – niepewne pola są podświetlone. Dopiero zatwierdzone dane liczy silnik regułowy. Pliki i wyniki są przetwarzane w pamięci i nie są przechowywane; w UI jest informacja o wysyłce do modelu. Funkcja działa tylko z kluczem `ANTHROPIC_API_KEY` – bez niego przycisk prowadzi do formularza ręcznego. |
 
-Każda taka funkcja dostanie w UI plakietkę **„AI”** (komponent `AiBadge`) i opis w tej sekcji.
+Zaplanowane, jeszcze niezrobione: asystent „Zapytaj o zasiłki” (KAN-37) – odpowiedzi oparte na parametrach, silniku i sytuacji użytkownika, bez podejmowania decyzji.
 
 ### AI w procesie twórczym
 
@@ -185,6 +184,7 @@ Kod, testy i dokumentację tworzyliśmy z pomocą asystenta programisty **Claude
 | Biblioteka | Do czego | Licencja |
 |------------|----------|----------|
 | next 16, react 19, react-dom 19 | framework UI i REST API | MIT |
+| @anthropic-ai/sdk | wywołanie modelu Claude przy odczycie PDF (funkcja AI) | MIT |
 | typescript | język | Apache-2.0 |
 | tailwindcss 4, @tailwindcss/turbopack, tw-animate-css | style | MIT |
 | shadcn (+ komponenty shadcn/ui skopiowane do `src/components/ui`), radix-ui | komponenty dostępnego UI | MIT |
@@ -207,6 +207,7 @@ Kod, testy i dokumentację tworzyliśmy z pomocą asystenta programisty **Claude
 
 - **Vercel** – hosting demo.
 - **Upstash Redis** – trwałe przechowywanie parametrów z panelu admina na Vercelu (bez niego – pamięć).
+- **Anthropic API (Claude)** – odczyt wgranych PDF (funkcja AI, opcjonalna, wymaga `ANTHROPIC_API_KEY`).
 
 Aplikacja nie łączy się z prawdziwymi systemami ZUS, mObywatel ani gov.pl. Wszystkie integracje to symulacje na fikcyjnych danych; nie kopiujemy logotypów ani wyglądu tych systemów.
 
@@ -253,6 +254,6 @@ Zrzuty generuje `npm run screens` (Playwright).
 - **Integracje gotowe do podmiany:** mocki mają ten sam kształt co docelowe usługi (profil ubezpieczonego, e-ZLA, stan rozliczeń, wysyłka wniosku). Podłączenie API ZUS/PUE i logowania mObywatel/węzła krajowego oznacza wymianę warstwy `src/server/mocks`, bez zmian w silniku i UI.
 - **Przepisy jako parametry:** stawki, wymiary, terminy i progi są w wersjonowanych parametrach z historią zmian i panelem administracyjnym – zmiana przepisów nie wymaga wdrożenia kodu.
 - **Silnik jako usługa:** czyste funkcje + REST API (`/api/calculate`, `/api/eligibility`, `/api/pregnancy`) mogą zasilać PUE, aplikację mZUS albo systemy kadrowe pracodawców.
-- **Jakość:** 173 testy jednostkowe (każda reguła), runner spraw porównujący wynik z decyzją ZUS (gotowy na prawdziwe zanonimizowane sprawy), 26 testów E2E na desktopie i telefonie, typecheck i lint.
+- **Jakość:** 183 testy jednostkowe (każda reguła), runner spraw porównujący wynik z decyzją ZUS (gotowy na prawdziwe zanonimizowane sprawy), 31 testów E2E na desktopie i telefonie, typecheck i lint.
 - **Dostępność i RWD:** semantyczne komponenty Radix/shadcn, etykiety pól, komunikaty `aria-live`, obsługa klawiatury, brak poziomego scrolla na telefonie, druk dokumentów.
 - **Prywatność:** brak danych osobowych na serwerze, prawdziwe sprawy ZUS tylko lokalnie i poza buildem.

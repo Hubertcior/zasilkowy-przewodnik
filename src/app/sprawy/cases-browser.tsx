@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import type { CaseFile } from "@/engine/types";
 import { useCaseStore } from "@/store/useCaseStore";
+import { AiBadge } from "@/components/ai-badge";
+import { PdfExtract } from "./pdf-extract";
 
 interface CaseSummary {
   id: string;
@@ -31,7 +33,17 @@ export function CasesBrowser() {
   const [cases, setCases] = useState<CaseSummary[] | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [pdfOpen, setPdfOpen] = useState(false);
+  // [AI] PDF reading is shown only when the server has ANTHROPIC_API_KEY (GET /api/cases/extract).
+  const [aiEnabled, setAiEnabled] = useState(false);
+  const [aiOpen, setAiOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    fetch("/api/cases/extract")
+      .then((r) => (r.ok ? r.json() : { enabled: false }))
+      .then((j: { enabled: boolean }) => setAiEnabled(j.enabled))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     fetch("/api/cases")
@@ -105,10 +117,11 @@ export function CasesBrowser() {
         <Button onClick={() => fileRef.current?.click()} disabled={busy !== null}>
           {busy === "upload" ? "Wczytuję…" : "Wgraj sprawę (.json)"}
         </Button>
-        <Button variant="outline" onClick={() => setPdfOpen(true)}>
-          Wgraj PDF
+        <Button variant="outline" onClick={() => (aiEnabled ? setAiOpen(true) : setPdfOpen(true))}>
+          Wgraj PDF {aiEnabled && <AiBadge className="ml-1" />}
         </Button>
       </div>
+      {aiOpen && <PdfExtract onCancel={() => setAiOpen(false)} onConfirm={(c) => open(c, "upload")} />}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cases === null
@@ -143,8 +156,8 @@ export function CasesBrowser() {
           <DialogHeader>
             <DialogTitle>Odczyt dokumentów PDF</DialogTitle>
             <DialogDescription>
-              Automatyczny odczyt wniosków i zaświadczeń (ZAM, Z-3, Z-3a) z PDF z pomocą AI jest w przygotowaniu. Na razie wprowadź dane ręcznie –
-              formularz ma pola odpowiadające zaświadczeniu Z-3 i wnioskowi ZAM.
+              Automatyczny odczyt wniosków i zaświadczeń (ZAM, Z-3, Z-3a) przez AI nie jest włączony na tym serwerze (brak klucza API). Wprowadź dane
+              ręcznie – formularz ma pola odpowiadające zaświadczeniu Z-3 i wnioskowi ZAM.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

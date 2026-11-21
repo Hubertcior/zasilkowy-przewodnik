@@ -85,7 +85,7 @@ _Zrzut: docs/screens/06-wniosek-desktop.jpg_
 
 - Wybierz lub wgraj sprawę – aplikacja pokazuje decyzję ZUS i nasze wyliczenie obok siebie
 - 10 syntetycznych spraw (m.in. bliźnięta „Za życiem”, wcześniak, martwe urodzenie) – wszystkie zgodne
-- 173 testy reguł, 26 testów E2E na komputerze i telefonie
+- 183 testy reguł i logiki, 31 testów E2E na komputerze i telefonie
 
 _Zrzut: docs/screens/09-sprawy-desktop.jpg_
 
@@ -97,9 +97,9 @@ _Zrzut: docs/screens/09-sprawy-desktop.jpg_
 
 - Silnik jako czyste funkcje + REST API: ten sam kod dla UI, PUE czy systemów kadrowych
 - Przepisy jako parametry: panel administracyjny z wersjami, historią i resetem – zmiana stawki bez programisty
-- AI: wyliczenia są regułowe i powtarzalne; AI (Claude) wspierało tworzenie kodu, odczyt PDF i asystent to kolejny krok
+- AI tylko tam, gdzie pomaga: odczyt wgranych PDF (ZAM, Z-3) do formularza, który użytkownik zatwierdza; wyliczenia są regułowe
 
-> **Notatka:** Pokażemy to na żywo: zmieniam stawkę w panelu, kalkulator od razu liczy inaczej. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją ZUS co do grosza.
+> **Notatka:** Pokażemy to na żywo: zmieniam stawkę w panelu, kalkulator od razu liczy inaczej. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją ZUS co do grosza. AI tylko odczytuje wgrane PDF, a człowiek zatwierdza dane.
 
 ---
 

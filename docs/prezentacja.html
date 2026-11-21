@@ -170,20 +170,20 @@
     </ul>
     <div class="stats">
       <div class="stat"><b>10 / 10</b><span>przykładowych spraw zgodnych</span></div>
-      <div class="stat"><b>173</b><span>testy reguł silnika</span></div>
-      <div class="stat"><b>26</b><span>testów E2E – komputer i telefon</span></div>
+      <div class="stat"><b>183</b><span>testy reguł i logiki</span></div>
+      <div class="stat"><b>31</b><span>testów E2E – komputer i telefon</span></div>
     </div>
   </section>
 
   <section class="slide" data-n="9"
-    data-notes="Pokażemy to na żywo: zmieniam stawkę w panelu, kalkulator od razu liczy inaczej. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją ZUS co do grosza.">
+    data-notes="Pokażemy to na żywo: zmieniam stawkę w panelu, kalkulator od razu liczy inaczej. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją ZUS co do grosza. AI tylko odczytuje wgrane PDF, a człowiek zatwierdza dane.">
     <div class="kicker">Wdrożenie</div>
     <h1>Gotowe do wdrożenia</h1>
     <div class="cols">
       <ul>
         <li>Silnik jako czyste funkcje + REST API: ten sam kod dla UI, PUE czy systemów kadrowych</li>
         <li>Przepisy jako parametry: panel z wersjami, historią i resetem – zmiana stawki bez programisty</li>
-        <li>AI: wyliczenia regułowe i powtarzalne; AI (Claude) wspierało tworzenie kodu, odczyt PDF i asystent to kolejny krok</li>
+        <li>AI tylko tam, gdzie pomaga: odczyt wgranych PDF (ZAM, Z-3) do formularza, który użytkownik zatwierdza; wyliczenia są regułowe</li>
       </ul>
       <div class="shot"><img src="screens/10-admin-desktop.jpg" alt="Panel administracyjny parametrów" /></div>
     </div>

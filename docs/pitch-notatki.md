@@ -18,9 +18,9 @@ Slajdy: [prezentacja.html](prezentacja.html) (treść: [prezentacja.md](prezenta
 
 **[Slajd 7 – 20 s]** Symulujemy integracje: dane z ZUS, e-ZLA z kodem B, zaświadczenie o zadłużeniu, pytanie do ZUS i wysyłkę wniosków. Siedem wzorów wniosków o urlopy przygotowaliśmy według rozporządzenia, a ZAM odwzorowuje aktualny formularz ZUS.
 
-**[Slajd 8 – 20 s]** Wyliczenia są sprawdzalne: przy przykładowej sprawie pokazujemy decyzję ZUS obok naszego wyniku. Wszystkie 10 spraw jest zgodnych, mamy 173 testy reguł i 26 testów na komputerze i telefonie.
+**[Slajd 8 – 20 s]** Wyliczenia są sprawdzalne: przy przykładowej sprawie pokazujemy decyzję ZUS obok naszego wyniku. Wszystkie 10 spraw jest zgodnych, mamy 183 testy reguł i logiki oraz 31 testów na komputerze i telefonie.
 
-**[Slajd 9 – 20 s]** To jest gotowe do wdrożenia: silnik udostępniamy przez REST API, a przepisy są parametrami w panelu administracyjnym z wersjami i historią. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją co do grosza. AI pomagało nam tworzyć kod.
+**[Slajd 9 – 20 s]** To jest gotowe do wdrożenia: silnik udostępniamy przez REST API, a przepisy są parametrami w panelu administracyjnym z wersjami i historią. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją co do grosza. AI odczytuje tylko wgrane PDF do formularza, który człowiek zatwierdza.
 
 **[Slajd 10 – 15 s]** Przyszły rodzic wie, co mu przysługuje, zanim złoży wniosek. Zapraszamy do demo – linki są na slajdzie i w README. Dziękujemy.
 
@@ -31,7 +31,7 @@ Rodzice często nie wiedzą, jakie mają prawa do zasiłków, a skutkiem są zas
 ## Q&A
 
 **1. Skąd wiecie, że wyliczenia są zgodne z przepisami?**
-Reguły w silniku mają przypisaną podstawę prawną (widać ją w aplikacji przy każdym wyniku i ostrzeżeniu). Kluczowe zasady sprawdziliśmy w źródłach: treść rozporządzenia o wnioskach (Dz.U. 2025 poz. 322), Poradnik ZUS dla rodziców 2026, formularz ZAM, gov.pl. Każda reguła ma testy (173), a przykładowe sprawy z ręcznie policzonym wynikiem są zgodne w 10 na 10. Miejsca do dalszej weryfikacji mamy spisane.
+Reguły w silniku mają przypisaną podstawę prawną (widać ją w aplikacji przy każdym wyniku i ostrzeżeniu). Kluczowe zasady sprawdziliśmy w źródłach: treść rozporządzenia o wnioskach (Dz.U. 2025 poz. 322), Poradnik ZUS dla rodziców 2026, formularz ZAM, gov.pl. Każda reguła ma testy (183), a przykładowe sprawy z ręcznie policzonym wynikiem są zgodne w 10 na 10. Miejsca do dalszej weryfikacji mamy spisane.
 
 **2. Co, gdy zmienią się przepisy – np. stawka albo wymiar urlopu?**
 Stawki, wymiary, terminy i progi to parametry, nie kod. Administrator zmienia je w panelu `/admin`, zapis tworzy nową wersję z opisem zmiany i historią różnic, a kalkulator od razu liczy według nowych wartości. Można wrócić do domyślnych albo zaimportować zestaw parametrów z pliku.
@@ -52,7 +52,7 @@ Przy pracy do pół etatu urlop wydłuża się proporcjonalnie, a zasiłek jest 
 Przy sprawie z wynikiem ZUS pokazujemy różnicę pole po polu (prawo, podstawa, kwota). Runner `npm run cases` wypisuje różnice dla całego zestawu, więc po otrzymaniu zanonimizowanych spraw od ZUS szybko znajdziemy regułę do poprawy. Aplikacja zawsze zaznacza, że wynik jest informacyjny i nie zastępuje decyzji.
 
 **8. Gdzie jest AI?**
-W działaniu aplikacji – nigdzie, świadomie: wyliczenie ma być powtarzalne i zgodne z decyzją co do grosza. AI (Claude) wspierało nas przy tworzeniu kodu, testów i dokumentacji. Następny krok to odczyt wgranych PDF (ZAM, Z-3) do formularza sprawy i asystent pytań – zawsze z plakietką „AI” i weryfikacją przez użytkownika.
+W jednym miejscu, oznaczonym plakietką „AI”: odczyt wgranych PDF (ZAM, Z-3, Z-3a). Claude odczytuje dane do schematu, przy każdym polu podaje pewność i cytat z dokumentu, a użytkownik sprawdza i zatwierdza formularz. Wyliczeń AI nie robi – liczy silnik regułowy, żeby wynik był powtarzalny i zgodny z decyzją co do grosza. Pliki nie są przechowywane. Przy tworzeniu kodu pomagał nam Claude jako asystent programisty.
 
 **9. Czy to się skaluje?**
 Silnik to czyste funkcje bez stanu, a API jest bezstanowe (sesje w ciasteczkach, wysyłka wniosków bez zapisu po stronie serwera). Można je skalować poziomo na dowolnej platformie; parametry trzymamy w Redis (Upstash) albo w pliku. Na Vercelu działa bez dodatkowej infrastruktury.

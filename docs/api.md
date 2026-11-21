@@ -32,6 +32,8 @@ Wszystkie obliczenia pobierają aktualne parametry z `getParamsStore()` (panel a
 | GET | `/api/mock/zus/zadluzenie?date=` | SYMULACJA zadłużenia składkowego na dzień: `{ date, asOf, amount, details[] }` (KAN-29) |
 | GET | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: lista wątków `{ threads[] }` (KAN-29) |
 | POST | `/api/mock/pue/wiadomosc` | SYMULACJA „Zapytaj ZUS”: `{ category: macierzynski\|chorobowy\|dokumenty, subject?, question }` → 201 `{ thread }`; odpowiedź szablonowa po ok. 3 s (KAN-29) |
+| GET | `/api/cases/extract` | **[AI]** czy odczyt PDF jest włączony: `{ enabled, limits }` (KAN-36) |
+| POST | `/api/cases/extract` | **[AI]** multipart `files` (1–5 PDF, ≤ 10 MB) → `{ ai, model, extraction }` – dane sprawy z pewnością i cytatem przy każdym polu (`src/lib/extraction.ts`); 503 bez `ANTHROPIC_API_KEY`, 422 odmowa modelu, 502 brak poprawnych danych (KAN-36) |
 | POST | `/api/mock/wnioski` | SYMULACJA wysyłki wniosku: `{ formId, values }` → 201 `{ caseNumber, recipient, submittedAt, timeline[] }` (statusy złożony → przyjęty → w trakcie rozpatrywania z czasami), 400 `{ error: "validation", fields }`, 404 nieznany formularz. Bezstanowe, wartości (w tym nr konta) nie są zapisywane. Definicje formularzy: `src/forms` (KAN-30) |
 
 Schematy wejścia: `src/engine/schemas.ts` (zod, zgodne z `src/engine/types.ts`).

@@ -38,6 +38,7 @@ Dziennik dla osoby (lub agenta), która przejmuje projekt. Aktualizowany po każ
 | KAN-33 | 85d375e | `docs/opis-projektu.md` (problem, rozwiązanie, tabela pokrycia wymagań a–j + symulacje + admin + formalne/techniczne, mermaid, jak testować, AI – w działaniu brak, w procesie Claude Code, biblioteki z licencjami, źródła, ograniczenia, potencjał), README ze skrótem i linkami, 20 zrzutów `docs/screens/*.jpg` (desktop + iPhone 13) generowanych `npm run screens` (`playwright.screens.config.ts`, `scripts/screens`) | Linki do demo, filmu i prezentacji to placeholdery – uzupełnić po deployu (Vercel) i KAN-34/35. Po zmianach UI odśwież zrzuty `npm run screens`. |
 | KAN-34 | a4007b0 | `docs/prezentacja.html` (10 slajdów, jeden plik, ← → / N notatki / F pełny ekran, druk = 10 stron PDF, zrzuty z `docs/screens`), `docs/prezentacja.md` (treść + notatki), `docs/pitch-notatki.md` (tekst na 3 min, wersja 60 s, 10 pytań Q&A, lista prób) | **Zadanie w In Progress – czeka na próby zespołu.** Imiona zespołu i linki do demo/filmu do uzupełnienia na slajdach 1 i 10. |
 | KAN-35 | 27a0cd5 | `docs/film-skrypt.md` (tabela 2:45: czas → ekran/akcja → lektor → napis; dane demo, przygotowanie, lista 9 ujęć desktop/mobile z kolejnością kliknięć, instrukcja publikacji), strona `/o-projekcie` z osadzaniem filmu (`src/data/project.ts` → `videoUrl`, YouTube przez youtube-nocookie), `e2e/film.spec.ts` przechodzi ścieżkę filmu i pilnuje etykiet; footer: link „O projekcie (film)”, `/admin` bez prefetch | **Zadanie w In Progress – czeka na nagranie i publikację przez zespół.** Po publikacji: wkleić link w `src/data/project.ts`, README, opisie, slajdzie 10. |
+| KAN-36 | __SHA__ | **[AI]** Odczyt PDF: `src/lib/extraction.ts` (schemat z pewnością i cytatem przy każdym polu, normalizacja, formularz weryfikacji, konwersja do `CaseFile`), `src/server/extract.ts` (`@anthropic-ai/sdk`, `client.beta.messages.parse` + `betaZodOutputFormat`, PDF base64, `fallbacks: "default"`, 1 retry, obsługa odmowy), `GET/POST /api/cases/extract`, UI `/sprawy` → „Wgraj PDF” z `AiBadge` i ekranem weryfikacji (`pdf-extract.tsx`); testy z atrapą klienta + E2E z przechwyconym API; opis AI w `docs/opis-projektu.md` | Model `claude-opus-5-5` (zmiana: `ANTHROPIC_MODEL`). Bez `ANTHROPIC_API_KEY` funkcja ukryta (przycisk prowadzi do kreatora). **Nie testowane z prawdziwym kluczem** – zespół powinien sprawdzić na kilku PDF (ZAM, Z-3). Plan urlopów nie jest odczytywany – działa plan domyślny. |
 
 ## Do zrobienia (stan na 2026-11-21)
 
@@ -47,7 +48,7 @@ Zadania w Jirze, w kolejności (Rank):
 |---------|-------|-----------|
 | KAN-34 | Próby prezentacji (ręczne) | Materiały gotowe (`docs/prezentacja.html`, `docs/pitch-notatki.md`); zespół robi 3 próby i przenosi zadanie do Done. |
 | KAN-35 | Nagranie i publikacja filmu (ręczne) | Skrypt i plan ujęć: `docs/film-skrypt.md`. Link wkleić w `src/data/project.ts` (`videoUrl`), README, opisie i slajdzie 10. |
-| KAN-36–38 | P2: odczyt PDF przez AI, asystent AI, PWA/.ics | Opcjonalne. |
+| KAN-37–38 | P2: asystent AI, PWA/.ics | Opcjonalne. |
 
 ## Ważne decyzje i pułapki
 
