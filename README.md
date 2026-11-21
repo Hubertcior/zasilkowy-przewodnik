@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zasiłkowy Przewodnik Przyszłego Rodzica
 
-## Getting Started
+Aplikacja webowa (RWD) przygotowana na HackNation 2026 (zadanie ZUS), która indywidualnie ustala uprawnienia i wylicza zasiłki z ubezpieczenia chorobowego dla przyszłych rodziców — zasiłek chorobowy w okresie ciąży oraz zasiłek macierzyński we wszystkich wariantach — prowadzi przez składanie wniosków i symuluje integracje z mObywatelem, danymi ZUS, PUE i e-ZLA. Stos: Next.js (UI + REST API), TypeScript, Tailwind CSS, shadcn/ui.
 
-First, run the development server:
+## Uruchomienie
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm i
+npm run dev      # http://localhost:3000
+npm test         # testy (vitest)
+npm run typecheck
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Struktura
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/engine/` — czysta logika zasiłków (bez React/Next)
+- `src/config/params.default.json` — domyślne parametry
+- `src/server/` — magazyn parametrów i mocki integracji
+- `src/app/api/` — REST API
+- `src/components/` — komponenty UI (shadcn/ui w `ui/`)
+- `src/fixtures/cases/` — syntetyczne przykładowe sprawy
+- `docs/` — dokumentacja
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Oryginalne zestawy spraw od ZUS nie mogą być kopiowane ani publikowane — trzymaj je lokalnie w `cases-private/` (ignorowane przez git).
 
-## Learn More
+## Deploy (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Zaloguj się na [vercel.com](https://vercel.com) i wybierz **Add New → Project**.
+2. Zaimportuj repozytorium `zasilkowy-przewodnik` z GitHuba.
+3. Framework zostanie wykryty automatycznie (Next.js) — kliknij **Deploy**.

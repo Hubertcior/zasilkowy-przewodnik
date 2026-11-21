@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# oryginalne zestawy spraw od ZUS - nigdy nie trafiają do repo
+cases-private/
