@@ -11,7 +11,11 @@ npm test         # testy (vitest)
 npm run typecheck
 npm run build
 npm run cases      # runner przykładowych spraw (fixtures + cases-private)
+npm run e2e        # testy E2E Playwright (build + start na porcie 3100, desktop 1440×900 i iPhone 13)
 ```
+
+Przed pierwszym `npm run e2e` pobierz przeglądarkę: `npx playwright install chromium`. Raport: `npx playwright show-report`.
+Ręczne testy przed demo: [docs/checklista-reczna.md](docs/checklista-reczna.md).
 
 ## Struktura
 

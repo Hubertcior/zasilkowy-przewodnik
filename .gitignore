@@ -46,3 +46,9 @@ cases-private/
 
 # lokalny magazyn parametrów (FileParamsStore)
 /data/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

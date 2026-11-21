@@ -1,6 +1,6 @@
 "use client";
 
-import { Plus, Printer, Save, Trash2 } from "lucide-react";
+import { ChevronDown, Plus, Printer, Save, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -21,6 +21,7 @@ import { WarningCallout } from "@/components/warning-callout";
 import type { CalculateResult } from "@/engine/calculate";
 import type { LeavePlan, ParentData, Scenario } from "@/engine/types";
 import { useToday } from "@/hooks/use-today";
+import { cn } from "@/lib/utils";
 import { useCaseStore } from "@/store/useCaseStore";
 import { CALC_PRESETS, presetScenario, type CalcPreset } from "@/lib/calc-presets";
 import { MoneyChart } from "./money-chart";
@@ -71,6 +72,7 @@ export function Calculator() {
   const hasStoreData = store.parents.length > 0 && !!store.scenario;
 
   const [quickFather, setQuickFather] = useState(true);
+  const [optsOpen, setOptsOpen] = useState(true);
   const parents: ParentData[] = useMemo(() => {
     if (hasStoreData) return store.parents;
     return quickFather ? [syntheticParent("matka"), syntheticParent("ojciec")] : [syntheticParent("matka")];
@@ -429,19 +431,25 @@ export function Calculator() {
   return (
     <div className="grid gap-6 lg:grid-cols-[22rem_1fr]">
       <aside className="print:hidden lg:sticky lg:top-20 lg:self-start">
-        <Card className="lg:hidden">
-          <Accordion type="single" collapsible defaultValue="opts">
-            <AccordionItem value="opts" className="border-0">
-              <AccordionTrigger className="px-4">Opcje kalkulatora</AccordionTrigger>
-              <AccordionContent className="px-4">{options}</AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </Card>
-        <Card className="hidden max-h-[calc(100dvh-6rem)] overflow-y-auto lg:block">
+        {/* Rendered once (no duplicated ids); collapsible on mobile only. */}
+        <Card className="lg:max-h-[calc(100dvh-6rem)] lg:overflow-y-auto">
           <CardHeader>
-            <CardTitle className="text-base">Opcje</CardTitle>
+            <CardTitle className="text-base">
+              <button
+                type="button"
+                className="flex w-full items-center justify-between text-left lg:pointer-events-none"
+                aria-expanded={optsOpen}
+                aria-controls="calc-options"
+                onClick={() => setOptsOpen((o) => !o)}
+              >
+                Opcje kalkulatora
+                <ChevronDown className={cn("size-4 transition-transform lg:hidden", optsOpen && "rotate-180")} aria-hidden />
+              </button>
+            </CardTitle>
           </CardHeader>
-          <CardContent>{options}</CardContent>
+          <CardContent id="calc-options" className={cn(!optsOpen && "hidden lg:block")}>
+            {options}
+          </CardContent>
         </Card>
       </aside>
 

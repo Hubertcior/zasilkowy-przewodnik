@@ -1,7 +1,6 @@
 "use client";
 
 import { Lock } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,7 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export function AdminLoginForm() {
-  const router = useRouter();
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -20,7 +18,8 @@ export function AdminLoginForm() {
     setError(null);
     const res = await fetch("/api/admin/login", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ password }) });
     setBusy(false);
-    if (res.ok) router.replace("/admin");
+    // Full navigation: the client router may hold a prefetched /admin (made before login) that redirects back here.
+    if (res.ok) window.location.replace(new URL("/admin", window.location.origin));
     else setError("Nieprawidłowe hasło");
   }
 
