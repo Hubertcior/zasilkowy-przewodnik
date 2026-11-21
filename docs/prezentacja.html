@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zasiłkowy Przewodnik – prezentacja</title>
+<style>
+  /* Single-file deck: ← → / spacja – nawigacja, N – notatki prelegenta, F – pełny ekran, druk – PDF (1 slajd = 1 strona). */
+  :root {
+    --bg: #0f2a2e;
+    --paper: #fbfdfd;
+    --ink: #10232a;
+    --muted: #4c6168;
+    --accent: #0f766e;
+    --accent-soft: #e0f2f0;
+    --warn: #b45309;
+    --line: #d5e2e3;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); font-family: "Inter Variable", Inter, "Segoe UI", system-ui, sans-serif; color: var(--ink); }
+  .stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  .slide {
+    position: absolute; width: 1280px; height: 720px; background: var(--paper); border-radius: 18px;
+    padding: 64px 72px; display: none; transform-origin: center; overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  }
+  .slide.active { display: flex; flex-direction: column; }
+  .slide::after { content: attr(data-n) " / 10"; position: absolute; right: 36px; bottom: 26px; font-size: 14px; color: var(--muted); }
+  .kicker { font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 14px; }
+  h1 { font-size: 46px; line-height: 1.12; margin: 0 0 28px; letter-spacing: -.02em; max-width: 1050px; }
+  h1.big { font-size: 64px; }
+  ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 18px; }
+  li { font-size: 24px; line-height: 1.38; padding-left: 34px; position: relative; color: #1d3640; }
+  li::before { content: ""; position: absolute; left: 0; top: 12px; width: 14px; height: 14px; border-radius: 4px; background: var(--accent); }
+  .cols { display: grid; grid-template-columns: 1fr 1.08fr; gap: 44px; flex: 1; min-height: 0; align-items: start; }
+  .cols li { font-size: 21px; }
+  .shot { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 12px 30px rgba(16,35,42,.15); max-height: 470px; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .pills { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 30px; }
+  .pill { background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 10px 20px; font-weight: 600; font-size: 19px; }
+  .sim { display: inline-block; border: 2px dashed #f59e0b; background: #fffbeb; color: #92400e; font-weight: 700; letter-spacing: .12em; font-size: 14px; padding: 3px 10px; border-radius: 6px; vertical-align: middle; }
+  .title-slide { justify-content: center; background: linear-gradient(135deg, #0f766e 0%, #134e4a 100%); color: #fff; }
+  .title-slide .kicker { color: #99f6e4; }
+  .title-slide h1 { color: #fff; }
+  .title-slide p { font-size: 26px; color: #ccfbf1; margin: 0 0 12px; max-width: 900px; }
+  .logo { width: 72px; height: 72px; border-radius: 18px; background: #fff; color: var(--accent); display: grid; place-items: center; font-weight: 800; font-size: 30px; margin-bottom: 30px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 34px; }
+  .stat { border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; }
+  .stat b { display: block; font-size: 40px; color: var(--accent); letter-spacing: -.02em; }
+  .stat span { font-size: 17px; color: var(--muted); }
+  .links { margin-top: 30px; font-size: 21px; line-height: 1.8; color: var(--muted); }
+  .links b { color: var(--ink); }
+  .notes {
+    position: fixed; left: 0; right: 0; bottom: 0; max-height: 34vh; overflow: auto; background: #fffbeb; color: #3f2d0a;
+    border-top: 3px solid #f59e0b; padding: 14px 22px; font-size: 17px; line-height: 1.5; display: none; z-index: 5;
+  }
+  body.show-notes .notes { display: block; }
+  .help { position: fixed; left: 16px; bottom: 12px; color: #9fb8bb; font-size: 13px; z-index: 4; }
+  body.show-notes .help { display: none; }
+  @media print {
+    @page { size: 1280px 720px; margin: 0; }
+    html, body { background: #fff; height: auto; }
+    .stage { position: static; display: block; }
+    .slide { display: flex !important; flex-direction: column; position: relative; transform: none !important; box-shadow: none; border-radius: 0; page-break-after: always; break-after: page; }
+    .notes, .help { display: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <section class="slide title-slide" data-n="1"
+    data-notes="Dzień dobry. Jesteśmy zespołem … Zbudowaliśmy przewodnik, który w kilka minut mówi przyszłemu rodzicowi, co mu przysługuje, ile dostanie i jakie wnioski ma złożyć.">
+    <div class="logo">ZP</div>
+    <div class="kicker">HackNation 2026 · zadanie ZUS</div>
+    <h1 class="big">Zasiłkowy Przewodnik<br />Przyszłego Rodzica</h1>
+    <p>Prawo do zasiłków, ich wysokość i gotowe wnioski – w jednym miejscu.</p>
+    <p style="margin-top:40px;font-size:20px;color:#99f6e4">Zespół: imiona uzupełni zespół</p>
+  </section>
+
+  <section class="slide" data-n="2"
+    data-notes="To problemy nazwane w treści zadania ZUS. Przykład: osoba na działalności bez dobrowolnego chorobowego dowiaduje się o braku zasiłku dopiero po porodzie. Albo wniosek o cały urlop złożony 22. dnia – i zasiłek inny, niż planowała rodzina.">
+    <div class="kicker">Problem</div>
+    <h1>Rodzice nie wiedzą, co im przysługuje – a skutki ponosi i rodzina, i ZUS</h1>
+    <ul>
+      <li>Brak wiedzy o uprawnieniach: kto ma prawo do zasiłku, od kiedy, w jakiej wysokości</li>
+      <li>Zaskakujące decyzje: inna kwota, inny płatnik, inny okres niż oczekiwany</li>
+      <li>Błędne lub spóźnione wnioski i spory, które wynikają z niezrozumienia przepisów</li>
+      <li>Przepisy zależą od wielu warunków: tytuł ubezpieczenia, liczba dzieci, adopcja, praca w trakcie urlopu</li>
+    </ul>
+  </section>
+
+  <section class="slide" data-n="3"
+    data-notes="Niezależnie od ścieżki dane trafiają do tego samego modelu sprawy i tego samego silnika. Dzięki temu wynik jest ten sam w kalkulatorze, we wnioskach i w porównaniu z decyzją ZUS.">
+    <div class="kicker">Rozwiązanie</div>
+    <h1>Jeden przewodnik: od danych do gotowego wniosku</h1>
+    <div class="cols">
+      <ul>
+        <li>Ustalamy uprawnienia indywidualnie, liczymy wszystkie świadczenia jednym kalkulatorem i wypełniamy wnioski</li>
+        <li>Każdy wynik z wyjaśnieniem krok po kroku i podstawą prawną</li>
+      </ul>
+      <div class="shot"><img src="screens/01-start-desktop.jpg" alt="Strona startowa z trzema ścieżkami wejścia" /></div>
+    </div>
+    <div class="pills"><span class="pill">mObywatel → dane z ZUS</span><span class="pill">Kreator ręczny</span><span class="pill">Przykładowa sprawa: wybór lub upload</span></div>
+  </section>
+
+  <section class="slide" data-n="4"
+    data-notes="Anna, umowa o pracę, w ciąży. Widzi zielone „Jesteś ubezpieczona chorobowo”, że wypłaca pracodawca, jak powstała podstawa 6040,30 zł i ile dostanie w każdym wariancie. Dla Oli, która nie opłaca dobrowolnego chorobowego, ekran mówi wprost: brak prawa – i dlaczego.">
+    <div class="kicker">Moja sytuacja</div>
+    <h1>Odpowiedź w 30 sekund – z uzasadnieniem</h1>
+    <div class="cols">
+      <ul>
+        <li>Czy jesteś ubezpieczona i od kiedy masz prawo do zasiłku</li>
+        <li>Kto wypłaca: płatnik (powyżej 20 ubezpieczonych) czy ZUS – i gdzie złożyć wniosek</li>
+        <li>Podstawa wymiaru krok po kroku, kwoty w wariancie 81,5% i 100% + 70%, świadczenia w ciąży</li>
+      </ul>
+      <div class="shot"><img src="screens/03-moja-sytuacja-desktop.jpg" alt="Ekran Moja sytuacja" /></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="5"
+    data-notes="Tak jak rekomendował ZUS – wszystkie kalkulatory to jeden kalkulator z opcjami. Rodzina przesuwa części urlopu, dodaje pracę na pół etatu i od razu widzi, jak zmienia się okres i kwota.">
+    <div class="kicker">Zintegrowany kalkulator</div>
+    <h1>Jeden kalkulator zamiast pięciu</h1>
+    <div class="cols">
+      <ul>
+        <li>Oś czasu obojga rodziców: macierzyński, rodzicielski w częściach, ojcowski, przejęcie urlopu</li>
+        <li>Wieloraczki, „Za życiem”, wcześniak, adopcja i rodzina zastępcza, łączenie urlopu z pracą</li>
+        <li>81,5% za całość czy 100% + 70% – i wypłaty miesiąc po miesiącu</li>
+      </ul>
+      <div class="shot"><img src="screens/04-kalkulator-desktop.jpg" alt="Kalkulator z osią czasu urlopów" /></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="6"
+    data-notes="Tu jest największa wartość dla ZUS: mniej poprawek, mniej odwołań. Każde ostrzeżenie ma źródło w przepisach. Sekcja trudnych sytuacji powstała w spokojnym języku i podaje tylko zweryfikowane fundacje.">
+    <div class="kicker">Zagrożenia i dokumenty</div>
+    <h1>Mniej błędnych wniosków i sporów</h1>
+    <div class="cols">
+      <ul>
+        <li>Ostrzeżenia: termin 21 dni, przepadające 9 tygodni ojca, zadłużenie składkowe, ochrona z Kodeksu pracy</li>
+        <li>Kroki z terminami, załącznikami i adresatem – pracodawca czy ZUS, online przez PUE/eZUS</li>
+        <li>Trudne sytuacje: strata dziecka, wcześniak, choroba mamy – z organizacjami charytatywnymi</li>
+      </ul>
+      <div class="shot"><img src="screens/05-co-i-gdzie-desktop.jpg" alt="Co i gdzie złożyć" /></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="7"
+    data-notes="Wszystkie integracje są oznaczone jako SYMULACJA i działają na fikcyjnych osobach. Mają jednak kształt docelowych usług, więc podłączenie prawdziwego API nie wymaga zmian w silniku.">
+    <div class="kicker">Symulacje integracji <span class="sim">SYMULACJA</span></div>
+    <h1>Tak może to działać z systemami ZUS</h1>
+    <div class="cols">
+      <ul>
+        <li>mObywatel → dane z ZUS: okresy ubezpieczenia, płatnik, przychody</li>
+        <li>PUE/eZUS: e-ZLA z kodem B, zaświadczenie o zadłużeniu na dzień porodu, „Zapytaj ZUS”</li>
+        <li>Wnioski: 7 własnych wzorów o urlopy, ZAM, odpis aktu urodzenia – wypełnione z kalkulatora, wysyłka ze statusem</li>
+      </ul>
+      <div class="shot"><img src="screens/06-wniosek-desktop.jpg" alt="Podgląd wniosku przed wysyłką" /></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="8"
+    data-notes="Jury może wgrać własne sprawy. Lokalnie runner porównuje także prawdziwe sprawy ZUS, które trzymamy poza repozytorium.">
+    <div class="kicker">Weryfikacja</div>
+    <h1>Sprawdzalne wyliczenia: wynik ZUS obok naszego</h1>
+    <ul>
+      <li>Wybierz lub wgraj sprawę – aplikacja pokazuje decyzję ZUS i nasze wyliczenie obok siebie</li>
+      <li>Syntetyczne sprawy: m.in. bliźnięta „Za życiem”, wcześniak, adopcja, martwe urodzenie, likwidacja pracodawcy</li>
+    </ul>
+    <div class="stats">
+      <div class="stat"><b>10 / 10</b><span>przykładowych spraw zgodnych</span></div>
+      <div class="stat"><b>173</b><span>testy reguł silnika</span></div>
+      <div class="stat"><b>26</b><span>testów E2E – komputer i telefon</span></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="9"
+    data-notes="Pokażemy to na żywo: zmieniam stawkę w panelu, kalkulator od razu liczy inaczej. AI świadomie nie liczy zasiłków – wynik ma się zgadzać z decyzją ZUS co do grosza.">
+    <div class="kicker">Wdrożenie</div>
+    <h1>Gotowe do wdrożenia</h1>
+    <div class="cols">
+      <ul>
+        <li>Silnik jako czyste funkcje + REST API: ten sam kod dla UI, PUE czy systemów kadrowych</li>
+        <li>Przepisy jako parametry: panel z wersjami, historią i resetem – zmiana stawki bez programisty</li>
+        <li>AI: wyliczenia regułowe i powtarzalne; AI (Claude) wspierało tworzenie kodu, odczyt PDF i asystent to kolejny krok</li>
+      </ul>
+      <div class="shot"><img src="screens/10-admin-desktop.jpg" alt="Panel administracyjny parametrów" /></div>
+    </div>
+  </section>
+
+  <section class="slide" data-n="10"
+    data-notes="Podsumowanie jednym zdaniem i zaproszenie do demo. Linki są też w README.">
+    <div class="kicker">Podsumowanie</div>
+    <h1>Przyszły rodzic wie, co mu przysługuje – zanim złoży wniosek</h1>
+    <ul>
+      <li>Indywidualne uprawnienia, jeden kalkulator, gotowe wnioski, wsparcie w trudnych sytuacjach</li>
+    </ul>
+    <div class="links">
+      <div><b>Demo:</b> link po wdrożeniu</div>
+      <div><b>Film:</b> link</div>
+      <div><b>Repozytorium:</b> github.com/Hubertcior/zasilkowy-przewodnik</div>
+    </div>
+    <p style="font-size:30px;margin-top:auto;color:var(--accent);font-weight:700">Dziękujemy – zapraszamy do pytań</p>
+  </section>
+
+</div>
+<div class="notes" id="notes" aria-live="polite"></div>
+<div class="help">← → nawigacja · N notatki · F pełny ekran · Ctrl+P → PDF</div>
+<script>
+  const slides = [...document.querySelectorAll(".slide")];
+  const notes = document.getElementById("notes");
+  let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+  function fit() {
+    const s = Math.min(window.innerWidth / 1340, window.innerHeight / 780);
+    slides.forEach((el) => (el.style.transform = `scale(${s})`));
+  }
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((el, k) => el.classList.toggle("active", k === i));
+    notes.textContent = `Slajd ${i + 1}: ${slides[i].dataset.notes || ""}`;
+    history.replaceState(null, "", `#${i + 1}`);
+  }
+  document.addEventListener("keydown", (e) => {
+    if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    if (e.key === "Home") show(0);
+    if (e.key === "End") show(slides.length - 1);
+    if (e.key.toLowerCase() === "n") document.body.classList.toggle("show-notes");
+    if (e.key.toLowerCase() === "f") (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()).catch(() => {});
+  });
+  document.getElementById("stage").addEventListener("click", (e) => show(e.clientX > window.innerWidth / 2 ? i + 1 : i - 1));
+  window.addEventListener("resize", fit);
+  fit();
+  show(i);
+</script>
+</body>
+</html>
