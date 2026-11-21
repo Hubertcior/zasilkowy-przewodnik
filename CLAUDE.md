@@ -25,7 +25,9 @@ src/app         UI (App Router), komponenty w src/components (shadcn/ui w ui/)
 
 - `src/engine/types.ts`: typy domenowe (rozszerzaj w kolejnych zadaniach).
 - `src/config/params.default.json`: domyślne parametry zasiłków. W runtime udostępnia je `ParamsStore` w `src/server` (KAN-13).
-- `src/server/mocks`: mocki integracji (mObywatel, ZUS, PUE, e-ZLA).
+- `src/server/mocks`: mocki integracji (mObywatel, ZUS, PUE, e-ZLA); endpointy w `src/app/api/mock`.
+- `src/engine/schemas.ts` + `src/engine/calculate.ts`: walidacja wejścia API i orkiestracja całego wyliczenia. Opis API: [docs/api.md](docs/api.md).
+- Postęp i uwagi do weryfikacji: [docs/POSTEP.md](docs/POSTEP.md).
 - `src/fixtures/cases`: syntetyczne przykładowe sprawy (`CaseFile`).
 - Testy: vitest, `src/**/*.test.ts`. Logika silnika w `src/engine/__tests__`.
 

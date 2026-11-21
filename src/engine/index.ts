@@ -7,4 +7,6 @@ export * from "./entitlement";
 export * from "./schedule";
 export * from "./pregnancy";
 export * from "./warnings";
+export * from "./schemas";
+export * from "./calculate";
 export * from "./params";
