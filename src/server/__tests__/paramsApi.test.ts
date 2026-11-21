@@ -45,9 +45,11 @@ describe("/api/params", () => {
     expect((await put(defaultParams(), "nope")).status).toBe(401);
   });
 
-  it("PUT rejects everything when ADMIN_PASSWORD is unset", async () => {
+  it("without ADMIN_PASSWORD the demo default password is used", async () => {
     delete process.env.ADMIN_PASSWORD;
     expect((await put(defaultParams(), "")).status).toBe(401);
+    expect((await put(defaultParams(), KEY)).status).toBe(401);
+    expect((await put(defaultParams(), "demo-zus")).status).toBe(200);
   });
 
   it("PUT with invalid data → 400", async () => {
@@ -96,5 +98,56 @@ describe("FileParamsStore", () => {
     const h = await store.history();
     expect(h).toHaveLength(2);
     expect(h[1].author).toBe("tester");
+  });
+});
+
+describe("admin session + params affect calculation", () => {
+  beforeEach(() => {
+    process.env.ADMIN_PASSWORD = "s3cret";
+    setParamsStore(new MemoryParamsStore());
+  });
+  afterEach(() => {
+    setParamsStore(undefined);
+    delete process.env.ADMIN_PASSWORD;
+  });
+
+  it("login sets a session cookie accepted by PUT; wrong password → 401", async () => {
+    const { POST: login } = await import("@/app/api/admin/login/route");
+    expect((await login(new Request("http://x", { method: "POST", body: JSON.stringify({ password: "nope" }) }))).status).toBe(401);
+    const ok = await login(new Request("http://x", { method: "POST", body: JSON.stringify({ password: "s3cret" }) }));
+    expect(ok.status).toBe(200);
+    const cookie = ok.headers.get("set-cookie")!.split(";")[0];
+    const res = await PUT(
+      new Request("http://x", { method: "PUT", headers: { cookie, "x-change-note": encodeURIComponent("test zmiany") }, body: JSON.stringify(defaultParams()) }),
+    );
+    expect(res.status).toBe(200);
+    expect((await res.json()).version).toBe("2026.2"); // unchanged version is bumped
+    const history = await (await getHistory()).json();
+    expect(history[0].note).toBe("test zmiany");
+  });
+
+  it("forged / expired session cookie is rejected", async () => {
+    const { createSessionToken } = await import("@/server/adminAuth");
+    const expired = createSessionToken(Date.now() - 9 * 3600_000);
+    for (const token of ["123.abc", expired]) {
+      const res = await PUT(new Request("http://x", { method: "PUT", headers: { cookie: `zp_admin=${token}` }, body: JSON.stringify(defaultParams()) }));
+      expect(res.status).toBe(401);
+    }
+  });
+
+  it("changing rates.parental to 0.75 changes /api/calculate", async () => {
+    const { POST: calculate } = await import("@/app/api/calculate/route");
+    const body = JSON.stringify({
+      parents: [{ role: "matka", periods: [{ title: "umowa_o_prace", sickness: "obowiazkowe", from: "2020-01-01" }], incomes: [] }],
+      scenario: { kind: "urodzenie", birthDate: "2026-06-10", children: 1, zaZyciem: false },
+      baseOverride: { matka: 6040.3 },
+      plan: { longApplication: false, parental: [{ parent: "matka", weeks: 32 }] },
+    });
+    const run = async () => (await (await calculate(new Request("http://x", { method: "POST", body }))).json()).schedule.periods[1].monthlyAmount;
+    expect(await run()).toBe(4228.21);
+    const p = defaultParams();
+    p.rates.parental = 0.75;
+    expect((await PUT(new Request("http://x", { method: "PUT", headers: { "x-admin-key": "s3cret" }, body: JSON.stringify(p) }))).status).toBe(200);
+    expect(await run()).toBe(4530.23);
   });
 });

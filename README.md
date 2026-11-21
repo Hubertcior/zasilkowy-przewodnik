@@ -35,11 +35,11 @@ Stawki i wymiary są w `src/config/params.default.json`, nie w kodzie. W runtime
 | Metoda | Ścieżka | Opis |
 |--------|---------|------|
 | GET | `/api/params` | aktualne parametry |
-| PUT | `/api/params` | zapis (nagłówek `x-admin-key` = `ADMIN_PASSWORD`, opcjonalnie `x-admin-author`) |
+| PUT | `/api/params` | zapis (nagłówek `x-admin-key` albo sesja panelu; opcjonalnie `x-admin-author`, `x-change-note`) |
 | POST | `/api/params/reset` | przywrócenie domyślnych (admin) |
 | GET | `/api/params/history` | historia zmian |
 
-Skopiuj `.env.example` do `.env.local` i ustaw `ADMIN_PASSWORD`.
+Panel administracyjny: **`/admin`** (logowanie hasłem → sesja w ciasteczku httpOnly). Bez ustawionej zmiennej `ADMIN_PASSWORD` działa hasło demonstracyjne **`demo-zus`** – w produkcji ustaw własne (skopiuj `.env.example` do `.env.local`).
 
 ## Przykładowe sprawy
 

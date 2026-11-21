@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/coming-soon";
+import { PageContainer } from "@/components/page-container";
+import { AdminPanel } from "./admin-panel";
 
-export const metadata: Metadata = { title: "Panel administracyjny – Zasiłkowy Przewodnik" };
+export const metadata: Metadata = { title: "Panel administracyjny – Zasiłkowy Przewodnik", robots: { index: false } };
 
-export default function Page() {
-  return <ComingSoon title="Panel administracyjny" task="KAN-28">Edycja parametrów zasiłków, historia zmian i reset.</ComingSoon>;
+export default function AdminPage() {
+  return (
+    <PageContainer className="max-w-7xl">
+      <AdminPanel />
+    </PageContainer>
+  );
 }

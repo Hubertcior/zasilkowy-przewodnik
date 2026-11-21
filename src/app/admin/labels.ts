@@ -1,0 +1,72 @@
+// Polish labels and descriptions for parameter fields in the admin panel (keyed by dotted path or last segment).
+
+export const LABELS: Record<string, { label: string; desc?: string }> = {
+  version: { label: "Wersja parametrów", desc: "Zwiększana automatycznie przy zapisie, jeśli się nie zmieni." },
+  effectiveFrom: { label: "Obowiązuje od", desc: "Data wejścia w życie (YYYY-MM-DD)." },
+  source: { label: "Źródło", desc: "Akt prawny / załącznik, z którego pochodzą wartości." },
+  contributionRate: { label: "Składki społeczne pracownika", desc: "Część odejmowana od przychodu przy liczeniu podstawy (0,1371 = 13,71%)." },
+  minWage: { label: "Minimalne wynagrodzenie (zł)", desc: "Minimalna podstawa = płaca minimalna × (1 − składki)." },
+  maxContributionBaseNonEmployee: { label: "Limit podstawy składek – nie-pracownicy (zł)", desc: "Podstawa zasiłku nie wyższa niż limit × (1 − składki)." },
+  rates: { label: "Stawki zasiłków" },
+  "rates.maternity": { label: "Macierzyński", desc: "Zasiłek za urlop macierzyński (1 = 100%)." },
+  "rates.maternityLikeAdoption": { label: "Na warunkach macierzyńskiego" },
+  "rates.supplementary": { label: "Uzupełniający" },
+  "rates.paternity": { label: "Ojcowski" },
+  "rates.parental": { label: "Rodzicielski", desc: "Bez wniosku o cały urlop (0,7 = 70%)." },
+  "rates.longApplication": { label: "Wniosek o cały urlop", desc: "Stawka za cały okres przy wniosku do 21 dni po porodzie (0,815)." },
+  "rates.pregnancySickness": { label: "Chorobowy w ciąży (kod B)" },
+  "rates.standardSickness": { label: "Chorobowy standardowy" },
+  "rates.benefitEqualToMaternity": { label: "Zasiłek w wysokości macierzyńskiego" },
+  maternityWeeksByChildren: { label: "Urlop macierzyński wg liczby dzieci (tygodnie)", desc: "Klucz = liczba dzieci przy jednym porodzie (5 = 5 i więcej)." },
+  adoptionMinWeeks: { label: "Minimalny urlop na warunkach macierzyńskiego (tyg.)" },
+  motherObligatoryWeeks: { label: "Tygodnie wykorzystywane obowiązkowo przez matkę" },
+  parentalWeeks: { label: "Urlop rodzicielski (tygodnie)" },
+  "parentalWeeks.single": { label: "1 dziecko" },
+  "parentalWeeks.multiple": { label: "Wieloraczki" },
+  "parentalWeeks.zaZyciemSingle": { label: "„Za życiem” – 1 dziecko" },
+  "parentalWeeks.zaZyciemMultiple": { label: "„Za życiem” – wieloraczki" },
+  nonTransferableWeeks: { label: "Tygodnie nieprzenoszalne (każdy rodzic)" },
+  parentalMaxParts: { label: "Maks. liczba części rodzicielskiego" },
+  parentalUntilYearChildTurns: { label: "Rodzicielski do końca roku, w którym dziecko kończy (lat)" },
+  combineWork: { label: "Łączenie z pracą" },
+  "combineWork.maxWorkFraction": { label: "Maks. wymiar pracy (etat)" },
+  paternity: { label: "Urlop ojcowski" },
+  supplementary: { label: "Urlop uzupełniający (wcześniaki, hospitalizacja)" },
+  childDeath: { label: "Zgon dziecka" },
+  pregnancy: { label: "Ciąża i zasiłek chorobowy" },
+  "pregnancy.employerPaidDays": { label: "Dni płatne przez pracodawcę" },
+  "pregnancy.maxBenefitDays": { label: "Okres zasiłkowy w ciąży (dni)" },
+  "pregnancy.waitingDays": { label: "Okres wyczekiwania (dni)" },
+  rehabilitation: { label: "Świadczenie rehabilitacyjne (informacyjnie)" },
+  payerThresholdInsured: { label: "Próg płatnika (liczba ubezpieczonych)", desc: "Płatnik zgłaszający więcej osób sam wypłaca zasiłki." },
+  deadlines: { label: "Terminy" },
+  warnings: { label: "Progi ostrzeżeń (heurystyki)" },
+  adoptionAgeLimits: { label: "Limity wieku dziecka (adopcja / piecza)" },
+  forms: { label: "Formularze", desc: "Lista formularzy (JSON)." },
+  under50: { label: "Do 50 lat" },
+  from50: { label: "Od 50 lat" },
+  obowiazkowe: { label: "Obowiązkowe" },
+  dobrowolne: { label: "Dobrowolne" },
+  weeks: { label: "Tygodnie" },
+  maxWeeks: { label: "Maks. tygodni" },
+  maxParts: { label: "Maks. części" },
+};
+
+export function labelFor(path: string): { label: string; desc?: string } {
+  const last = path.split(".").at(-1)!;
+  return LABELS[path] ?? LABELS[last] ?? { label: last.replace(/([A-Z])/g, " $1").toLowerCase() };
+}
+
+export const TABS: { id: string; label: string; keys: string[] }[] = [
+  { id: "stawki", label: "Stawki", keys: ["rates"] },
+  {
+    id: "wymiary",
+    label: "Wymiary urlopów",
+    keys: ["maternityWeeksByChildren", "adoptionMinWeeks", "motherObligatoryWeeks", "parentalWeeks", "nonTransferableWeeks", "parentalMaxParts", "parentalUntilYearChildTurns", "combineWork", "paternity", "supplementary", "childDeath", "adoptionAgeLimits"],
+  },
+  { id: "podstawa", label: "Podstawa wymiaru", keys: ["contributionRate", "minWage", "maxContributionBaseNonEmployee"] },
+  { id: "ciaza", label: "Ciąża", keys: ["pregnancy", "rehabilitation"] },
+  { id: "terminy", label: "Płatnik i terminy", keys: ["payerThresholdInsured", "deadlines", "warnings"] },
+  { id: "formularze", label: "Formularze", keys: ["forms"] },
+  { id: "meta", label: "Wersja", keys: ["version", "effectiveFrom", "source"] },
+];

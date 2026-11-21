@@ -8,13 +8,15 @@ export interface ParamsHistoryEntry {
   author: string;
   action: "put" | "reset";
   version: string;
+  /** Description of the change entered by the admin. */
+  note?: string;
   params: Params;
 }
 
 export interface ParamsStore {
   readonly kind: string;
   get(): Promise<Params>;
-  put(params: Params, author: string): Promise<Params>;
+  put(params: Params, author: string, note?: string): Promise<Params>;
   reset(author?: string): Promise<Params>;
   history(): Promise<ParamsHistoryEntry[]>;
 }
@@ -26,8 +28,8 @@ export function defaultParams(): Params {
   return ParamsSchema.parse(structuredClone(defaults));
 }
 
-function entry(action: ParamsHistoryEntry["action"], author: string, params: Params): ParamsHistoryEntry {
-  return { at: new Date().toISOString(), author, action, version: params.version, params };
+function entry(action: ParamsHistoryEntry["action"], author: string, params: Params, note?: string): ParamsHistoryEntry {
+  return { at: new Date().toISOString(), author, action, version: params.version, ...(note ? { note } : {}), params };
 }
 
 /** In-process store. Used on serverless hosts without KV; data is lost on cold start. */
@@ -39,9 +41,9 @@ export class MemoryParamsStore implements ParamsStore {
   async get() {
     return structuredClone(this.current);
   }
-  async put(params: Params, author: string) {
+  async put(params: Params, author: string, note?: string) {
     this.current = ParamsSchema.parse(params);
-    this.log = [entry("put", author, this.current), ...this.log].slice(0, HISTORY_LIMIT);
+    this.log = [entry("put", author, this.current, note), ...this.log].slice(0, HISTORY_LIMIT);
     return this.get();
   }
   async reset(author = "system") {
@@ -95,10 +97,10 @@ export class FileParamsStore implements ParamsStore {
     }
     return parsed.data;
   }
-  async put(params: Params, author: string) {
+  async put(params: Params, author: string, note?: string) {
     const valid = ParamsSchema.parse(params);
     await this.writeJson(this.paramsFile, valid);
-    await this.append(entry("put", author, valid));
+    await this.append(entry("put", author, valid, note));
     return valid;
   }
   async reset(author = "system") {
@@ -150,10 +152,10 @@ export class UpstashParamsStore implements ParamsStore {
     }
     return parsed.data;
   }
-  async put(params: Params, author: string) {
+  async put(params: Params, author: string, note?: string) {
     const valid = ParamsSchema.parse(params);
     await this.cmd("SET", UpstashParamsStore.KEY, JSON.stringify(valid));
-    await this.append(entry("put", author, valid));
+    await this.append(entry("put", author, valid, note));
     return valid;
   }
   async reset(author = "system") {
