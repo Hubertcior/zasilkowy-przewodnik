@@ -24,8 +24,25 @@ npm run build
 
 > Oryginalne zestawy spraw od ZUS nie mogą być kopiowane ani publikowane — trzymaj je lokalnie w `cases-private/` (ignorowane przez git).
 
+## Parametry zasiłków i panel admina
+
+Stawki i wymiary są w `src/config/params.default.json`, nie w kodzie. W runtime udostępnia je `ParamsStore`:
+
+- lokalnie: plik `data/params.json` (gitignore),
+- na Vercelu: Upstash Redis, jeśli ustawisz `UPSTASH_REDIS_REST_URL` i `UPSTASH_REDIS_REST_TOKEN`; bez tego pamięć, a zmiany giną przy restarcie.
+
+| Metoda | Ścieżka | Opis |
+|--------|---------|------|
+| GET | `/api/params` | aktualne parametry |
+| PUT | `/api/params` | zapis (nagłówek `x-admin-key` = `ADMIN_PASSWORD`, opcjonalnie `x-admin-author`) |
+| POST | `/api/params/reset` | przywrócenie domyślnych (admin) |
+| GET | `/api/params/history` | historia zmian |
+
+Skopiuj `.env.example` do `.env.local` i ustaw `ADMIN_PASSWORD`.
+
 ## Deploy (Vercel)
 
 1. Zaloguj się na [vercel.com](https://vercel.com) i wybierz **Add New → Project**.
 2. Zaimportuj repozytorium `zasilkowy-przewodnik` z GitHuba.
-3. Framework zostanie wykryty automatycznie (Next.js) — kliknij **Deploy**.
+3. W **Environment Variables** ustaw `ADMIN_PASSWORD` (opcjonalnie zmienne Upstash).
+4. Framework zostanie wykryty automatycznie (Next.js) — kliknij **Deploy**.

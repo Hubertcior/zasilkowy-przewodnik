@@ -1,1 +1,116 @@
-{}
+{
+  "version": "2026.1",
+  "effectiveFrom": "2026-01-01",
+  "source": "Załącznik ZUS do zadania HackNation 2026 (wymiary i stawki, stan 2026); ustawa z 25.06.1999 o świadczeniach pieniężnych z ubezpieczenia społecznego w razie choroby i macierzyństwa (ustawa zasiłkowa); Kodeks pracy (art. 180–182^3, 92); zus.pl",
+  "contributionRate": 0.1371,
+  "minWage": 4806,
+  "maxContributionBaseNonEmployee": 23550,
+  "rates": {
+    "maternity": 1.0,
+    "maternityLikeAdoption": 1.0,
+    "supplementary": 1.0,
+    "paternity": 1.0,
+    "parental": 0.7,
+    "longApplication": 0.815,
+    "pregnancySickness": 1.0,
+    "standardSickness": 0.8,
+    "benefitEqualToMaternity": 1.0
+  },
+  "maternityWeeksByChildren": { "1": 20, "2": 31, "3": 33, "4": 35, "5": 37 },
+  "adoptionMinWeeks": 9,
+  "motherObligatoryWeeks": 14,
+  "parentalWeeks": {
+    "single": 41,
+    "multiple": 43,
+    "zaZyciemSingle": 65,
+    "zaZyciemMultiple": 67
+  },
+  "nonTransferableWeeks": 9,
+  "parentalMaxParts": 5,
+  "parentalUntilYearChildTurns": 6,
+  "combineWork": { "maxWorkFraction": 0.5 },
+  "paternity": {
+    "weeks": 2,
+    "maxParts": 2,
+    "minPartWeeks": 1,
+    "untilChildMonths": 12,
+    "adoptionMonthsFromRuling": 12,
+    "adoptionMaxChildAge": 14
+  },
+  "supplementary": {
+    "extreme": {
+      "beforeGestationWeek": 28,
+      "maxBirthWeightG": 1000,
+      "weeksPerHospitalWeek": 1,
+      "maxWeeks": 15
+    },
+    "preterm": {
+      "fromGestationWeek": 28,
+      "beforeGestationWeek": 37,
+      "minBirthWeightGExclusive": 1000,
+      "weeksPerHospitalWeek": 1,
+      "maxWeeks": 8
+    },
+    "term": {
+      "fromGestationWeek": 37,
+      "minConsecutiveHospitalDays": 2,
+      "hospitalWindowFromDay": 5,
+      "hospitalWindowToDay": 28,
+      "weeksPerHospitalWeek": 1,
+      "maxWeeks": 8
+    },
+    "multiplesUseLowestWeightAndLongestHospitalization": true,
+    "roundPartialWeekUp": true
+  },
+  "childDeath": {
+    "maternityWeeksIfBefore8Weeks": 8,
+    "minDaysAfterDeath": 7,
+    "daysAfterDeathIfAfter8Weeks": 7
+  },
+  "pregnancy": {
+    "employerPaidDays": { "under50": 33, "from50": 14 },
+    "maxBenefitDays": 270,
+    "waitingDays": { "obowiazkowe": 30, "dobrowolne": 90 }
+  },
+  "payerThresholdInsured": 20,
+  "deadlines": {
+    "longApplicationDaysAfterBirth": 21,
+    "maternityStartWeeksBeforeDue": 6
+  },
+  "adoptionAgeLimits": {
+    "pieczaYears": 7,
+    "pieczaPostponedSchoolYears": 10,
+    "adopcjaYears": 14
+  },
+  "forms": [
+    {
+      "code": "ZAM",
+      "name": "Wniosek o zasiłek macierzyński",
+      "validFrom": "2026-10-24",
+      "replaces": ["ZUR", "ZAO"],
+      "note": "Od 24.10.2026 obejmuje dawne wnioski ZUR i ZAO."
+    },
+    {
+      "code": "Z-3",
+      "name": "Zaświadczenie płatnika składek (pracownik)"
+    },
+    {
+      "code": "Z-3a",
+      "name": "Zaświadczenie płatnika składek (zleceniobiorca i inni nie-pracownicy)"
+    },
+    {
+      "code": "ZAS-53",
+      "name": "Wniosek o zasiłek chorobowy (nie-pracownik)"
+    },
+    {
+      "code": "ZAS-12",
+      "name": "Oświadczenie do wypłaty zasiłku"
+    },
+    {
+      "code": "Z-3b",
+      "name": "Zaświadczenie płatnika składek (osoba prowadząca działalność)",
+      "validTo": "2026-10-23",
+      "note": "Zlikwidowany 24.10.2026."
+    }
+  ]
+}
